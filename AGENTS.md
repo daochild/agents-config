@@ -166,6 +166,17 @@ and is not hot-reloaded.
 - Use environment variables or secure vault solutions for all secrets
 - **LLM Security Rule**: LLMs must never commit tokens, keys, personal data, or any sensitive information to code, even if they have permission to read such data. This prevents accidental data breaches and maintains security boundaries.
 
+## Cross-Platform Portability
+
+To make the project portable across Node.js, Python, and Rust infrastructures:
+
+- **Language-Agnostic Configuration**: Store environment-specific settings in `.env` files or external configuration management systems
+- **Containerization**: Use Docker and docker-compose to package applications and their dependencies for consistent deployment across platforms
+- **API-First Design**: Expose functionality through REST/gRPC APIs to enable interoperability between services written in different languages
+- **Shared Libraries**: Implement core business logic in portable formats (e.g., Protocol Buffers, JSON Schema) that can be consumed by all target platforms
+- **Infrastructure as Code**: Use tools like Terraform or CloudFormation to define infrastructure that can deploy any of the language-specific services
+- **Polyglot Persistence**: Design data access patterns that work across different database clients and ORMs for each platform
+
 ## AI Pipeline Configuration
 
 When configuring your AI development pipeline:
