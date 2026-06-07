@@ -31,10 +31,25 @@ agents-config/
 ├── LICENSE
 ├── .claude/                 # Claude Code project config
 │   ├── CLAUDE.md            # Claude Code instructions (sources AGENTS.md)
+│   ├── CLAUDE.local.md      # Personal overrides (gitignored)
+│   ├── settings.json        # Permissions + config (committed)
+│   ├── settings.local.json  # Personal permissions (gitignored)
 │   ├── rules/               # Always-loaded rule files
+│   │   ├── code-style.md
+│   │   ├── testing.md
+│   │   └── api-conventions.md
 │   ├── agents/              # Subagents (Claude Code .md format)
+│   │   ├── code-reviewer.md
+│   │   └── security-auditor.md
 │   ├── commands/            # Slash commands
+│   │   ├── review.md
+│   │   ├── fix-issue.md
+│   │   └── deploy.md
 │   └── skills/              # Skill folders, each with SKILL.md
+│       ├── security-review/
+│       │   └── SKILL.md
+│       └── deploy/
+│           └── SKILL.md
 └── .opencode/               # opencode project config
     ├── AGENTS.md            # opencode-scoped instructions (loaded via opencode.json)
     ├── agent/               # Subagents (opencode .md format)
