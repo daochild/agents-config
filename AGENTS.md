@@ -159,6 +159,20 @@ and is not hot-reloaded.
   - `docs/IMPLEMENTATION.md` - Implementation plan, status, and progress
   - `docs/ARCHITECTURE.md` - Technical approaches, stack decisions, and architecture
 
+## Architecture Approach Selection
+
+Before implementation, always ask the user what architecture approach to use, as the choice depends on business logic complexity. Consider these patterns:
+
+- **Clean Architecture** - Separates business logic from frameworks and I/O, promoting testability and maintainability
+- **Onion Architecture** - Layers of dependencies pointing inward toward the domain core, emphasizing domain isolation
+- **KISS (Keep It Simple, Stupid)** - Prioritizes simplicity and avoiding unnecessary complexity
+- **DRY (Don't Repeat Yourself)** - Reduces duplication by abstracting common functionality
+- **Hexagonal/Ports and Adapters** - Decouples application core from external systems through ports and adapters
+- **Microservices** - Decomposes application into loosely coupled, independently deployable services
+- **Monolithic** - Single deployable unit containing all functionality, suitable for simpler applications
+
+Choose the approach based on project scope, team size, scalability requirements, and business logic complexity. Document the decision in `docs/ARCHITECTURE.md`.
+
 ## Security Guidelines
 
 - Set up a vault (e.g., Hardhat vault) on your machine or repository to securely store private keys
