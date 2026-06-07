@@ -1,0 +1,28 @@
+{
+  "name": "@daochild/agents-config",
+  "version": "1.0.0",
+  "description": "Instructions for agentic coding pipelines.",
+  "keywords": [
+    "agent",
+    "AI",
+    "instructions",
+    "pipeline",
+    "no-code",
+    "less-code"
+  ],
+  "homepage": "https://github.com/daochild/agents-config#readme",
+  "bugs": {
+    "url": "https://github.com/daochild/agents-config/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daochild/agents-config.git"
+  },
+  "license": "MIT",
+  "author": "Pavlo Bolhar <pavlo.bolhar@proton.me>",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
