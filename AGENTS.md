@@ -31,6 +31,7 @@ agents-config/
 ├── LICENSE
 ├── docs/                    # Project documentation
 ├── research/                # Research and investigation materials
+├── resources/               # Project resources and assets
 ├── .claude/                 # Claude Code project config
 │   ├── CLAUDE.md            # Claude Code instructions (sources AGENTS.md)
 │   ├── CLAUDE.local.md      # Personal overrides (gitignored)
