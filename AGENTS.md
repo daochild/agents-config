@@ -153,6 +153,7 @@ and is not hot-reloaded.
 ## General Recommendations
 
 - Create a `README.md` file with deployment instructions
+- Create a `.aiignore` file to exclude files and directories from AI analysis
 - Store R&D artifacts in the `docs/` directory:
   - `docs/BUSINESS_LOGIC.md` - Business requirements and logic
   - `docs/IMPLEMENTATION.md` - Implementation plan, status, and progress
