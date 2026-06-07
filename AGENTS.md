@@ -161,9 +161,10 @@ and is not hot-reloaded.
 
 ## Security Guidelines
 
-- Set up a vault (e.g., Hardhat vault, Vault etc.) on your machine or repository to securely store private keys
+- Set up a vault (e.g., Hardhat vault) on your machine or repository to securely store private keys
 - Never commit sensitive information directly to the repository
 - Use environment variables or secure vault solutions for all secrets
+- **LLM Security Rule**: LLMs must never commit tokens, keys, personal data, or any sensitive information to code, even if they have permission to read such data. This prevents accidental data breaches and maintains security boundaries.
 
 ## AI Pipeline Configuration
 
