@@ -149,3 +149,26 @@ To create an agent for code generation tasks:
 After editing `opencode.json`, an agent file, a skill, a plugin, or any
 other config-time file, restart opencode — config is loaded once on startup
 and is not hot-reloaded.
+
+## General Recommendations
+
+- Create a `README.md` file with deployment instructions
+- Store R&D artifacts in the `docs/` directory:
+  - `docs/BUSINESS_LOGIC.md` - Business requirements and logic
+  - `docs/IMPLEMENTATION.md` - Implementation plan, status, and progress
+  - `docs/ARCHITECTURE.md` - Technical approaches, stack decisions, and architecture
+
+## Security Guidelines
+
+- Set up a vault (e.g., Hardhat vault, Vault etc.) on your machine or repository to securely store private keys
+- Never commit sensitive information directly to the repository
+- Use environment variables or secure vault solutions for all secrets
+
+## AI Pipeline Configuration
+
+When configuring your AI development pipeline:
+
+1. Follow the code generation pipeline steps above
+2. Add security checks as the final step of the pipeline
+3. Ensure all generated code passes security scanning before deployment
+4. Implement automated testing as part of the generation workflow
