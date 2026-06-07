@@ -88,6 +88,64 @@ agents-config/
 | Plugin          | `.opencode/plugin/<n>.ts` | n/a                        |
 | Always-on rule  | add to `opencode.json` `instructions` | add to `.claude/rules/` |
 
+## Code Generation Pipeline
+
+To create an agent for code generation tasks:
+
+1. **Define the agent** in `.opencode/agent/code-generator.md`:
+   ```markdown
+   ---
+   description: Generates code based on specifications and requirements
+   mode: primary
+   model: anthropic/claude-sonnet-4-6
+   permission:
+     edit: ask
+     bash: ask
+   ---
+   
+   You are a code generation agent specialized in creating high-quality code...
+   ```
+
+2. **Create supporting rules** in `.claude/rules/code-generation.md`:
+   - Coding standards and patterns
+   - Language-specific guidelines
+   - Testing requirements
+
+3. **Add skills** in `.opencode/skill/code-gen/SKILL.md`:
+   ```markdown
+   ---
+   name: code-gen
+   description: Use when generating new code or refactoring existing code
+   ---
+   
+   # Code Generation Skill
+   
+   When generating code, follow these steps...
+   ```
+
+4. **Set up commands** in `.opencode/command/generate.md`:
+   ```markdown
+   ---
+   description: Generate code from specifications
+   ---
+   
+   /generate [specification] - Create code based on provided requirements
+   ```
+
+5. **Configure permissions** in `opencode.json`:
+   ```json
+   {
+     "agent": {
+       "code-generator": {
+         "permission": {
+           "edit": "ask",
+           "bash": "ask"
+         }
+       }
+     }
+   }
+   ```
+
 After editing `opencode.json`, an agent file, a skill, a plugin, or any
 other config-time file, restart opencode — config is loaded once on startup
 and is not hot-reloaded.
