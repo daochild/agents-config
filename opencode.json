@@ -1,0 +1,21 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "AGENTS.md",
+    ".opencode/AGENTS.md"
+  ],
+  "skills": {
+    "paths": [
+      ".opencode/skill",
+      ".opencode/skills",
+      ".claude/skills"
+    ]
+  },
+  "agent": {
+    "docs": {
+      "description": "Answers questions about this agents-config repo layout and how .claude/ and .opencode/ link together.",
+      "mode": "subagent",
+      "prompt": "{file:./.opencode/agent/docs.md}"
+    }
+  }
+}
