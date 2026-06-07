@@ -29,6 +29,8 @@ agents-config/
 ├── AGENTS.md                # Repo-level layout + cross-tool conventions
 ├── opencode.json            # opencode project config (schema-pinned)
 ├── LICENSE
+├── docs/                    # Project documentation
+├── research/                # Research and investigation materials
 ├── .claude/                 # Claude Code project config
 │   ├── CLAUDE.md            # Claude Code instructions (sources AGENTS.md)
 │   ├── CLAUDE.local.md      # Personal overrides (gitignored)
