@@ -199,6 +199,7 @@ When configuring your AI development pipeline:
 2. Add security checks as the final step of the pipeline
 3. Ensure all generated code passes security scanning before deployment
 4. Implement automated testing as part of the generation workflow
+5. Add automated versioning updates at the end of the pipeline
 
 ## Code Quality Standards
 
