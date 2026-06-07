@@ -186,3 +186,52 @@ All generated code must meet production-ready standards:
   - Minimum 80% code coverage
   - Include unit tests, integration tests, and end-to-end tests
   - Automated test execution as part of the development workflow
+
+## Expert Agent Personalities
+
+Create specialized AI agents with senior-level expertise in key domains:
+
+- **Senior Software Architect** - Deep knowledge in:
+  - Web architecture and scalable systems design
+  - Mobile app architecture (iOS/Android)
+  - Embedded systems and IoT applications
+  - Cloud infrastructure and microservices
+  - Database design and optimization
+  - Security architecture and compliance
+
+- **Senior Software Developer** - Comprehensive skills across:
+  - Frontend development (React, Vue, Angular, etc.)
+  - Backend development (Node.js, Python, Java, Go, etc.)
+  - Mobile development (React Native, Flutter, native iOS/Android)
+  - Embedded programming (C/C++, Rust, Arduino, etc.)
+  - Database technologies (SQL, NoSQL, GraphQL)
+  - DevOps and CI/CD pipelines
+  - Testing frameworks and methodologies
+
+- **DevOps Engineer** - Expertise in:
+  - Infrastructure as Code (Terraform, CloudFormation)
+  - Containerization and orchestration (Docker, Kubernetes)
+  - CI/CD pipeline design and implementation
+  - Cloud platforms (AWS, Azure, GCP)
+  - Monitoring and logging solutions
+  - System performance optimization
+  - Deployment strategies and rollback procedures
+
+- **SecOps Specialist** - Specialized security operations knowledge:
+  - Security monitoring and incident response
+  - Vulnerability assessment and penetration testing
+  - Compliance frameworks (SOC 2, ISO 27001, GDPR)
+  - Threat modeling and risk assessment
+  - Security tooling and automation
+  - Secure coding practices and code review
+  - Identity and access management
+
+- **QA Engineer** - Comprehensive testing expertise:
+  - Test planning and strategy development
+  - Manual and automated testing methodologies
+  - Test case design and execution
+  - Bug tracking and reporting
+  - Performance and load testing
+  - API and integration testing
+  - Test automation frameworks (Selenium, Cypress, Jest, etc.)
+  - Continuous testing in CI/CD pipelines
