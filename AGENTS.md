@@ -172,3 +172,17 @@ When configuring your AI development pipeline:
 2. Add security checks as the final step of the pipeline
 3. Ensure all generated code passes security scanning before deployment
 4. Implement automated testing as part of the generation workflow
+
+## Code Quality Standards
+
+All generated code must meet production-ready standards:
+
+- **Production Ready Only** - All code must be production quality from the start
+- **Deep Research First** - Conduct thorough research at the beginning of development
+- **Document Findings** - Store research results and technical decisions
+- **Time Estimates** - Provide estimates in hours and weeks for all development work
+- **Comprehensive Testing** - 
+  - Local and development environment testing required
+  - Minimum 80% code coverage
+  - Include unit tests, integration tests, and end-to-end tests
+  - Automated test execution as part of the development workflow
