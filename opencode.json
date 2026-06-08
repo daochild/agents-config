@@ -2,7 +2,8 @@
   "$schema": "https://opencode.ai/config.json",
   "instructions": [
     "AGENTS.md",
-    ".opencode/AGENTS.md"
+    ".opencode/AGENTS.md",
+    ".claude/rules/programming-best-practices.md"
   ],
   "skills": {
     "paths": [
