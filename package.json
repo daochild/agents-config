@@ -1,6 +1,6 @@
 {
   "name": "@daochild/agents-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Instructions for agentic coding pipelines.",
   "keywords": [
     "agent",
