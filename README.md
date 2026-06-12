@@ -28,6 +28,10 @@ bun add @daochild/agents-config
 
 The package exposes a set of configuration files and scripts that can be consumed by the Opencode and Claude Code tooling.
 
+IMPORTANT: Instruct your AGENTS.md, put this string after title in the begin of the document.
+> **See also**: [`@daochild/agents-config/AGENTS.md`](node_modules/@daochild/agents-config/AGENTS.md) for shared agent
+> pipeline configuration.
+
 ## License
 
 MIT
