@@ -7,23 +7,24 @@ The package is intended for production‑grade automation: version control, CI/C
 ## Installation
 
 NodeJs stack.
-Select your package manager:
+Select your package manager. This package should be installed as a
+**dev dependency** since it configures the local development tooling.
 
 ```bash
 # Using npm
-npm install @daochild/agents-config
+npm install --save-dev @daochild/agents-config
 ```
 ```bash
 # Using yarn
-yarn install @daochild/agents-config
+yarn add --dev @daochild/agents-config
 ```
 ```bash
 # Using pnpm
-pnpm install @daochild/agents-config
+pnpm add --save-dev @daochild/agents-config
 ```
 ```bash
 # Using bun
-bun add @daochild/agents-config
+bun add --dev @daochild/agents-config
 ```
 
 The package exposes a set of configuration files and scripts that can be consumed by the Opencode and Claude Code tooling.
