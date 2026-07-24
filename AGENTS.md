@@ -264,3 +264,25 @@ Create specialized AI agents with senior-level expertise in key domains:
   - API and integration testing
   - Test automation frameworks (Selenium, Cypress, Jest, etc.)
   - Continuous testing in CI/CD pipelines
+
+## Documentation Maintenance
+
+At the end of each session or task, review and update relevant documentation:
+
+- **AGENTS.md** - Update if new conventions, patterns, or structures were introduced
+- **docs/ARCHITECTURE.md** - Document architecture decisions and changes
+- **docs/BUSINESS_LOGIC.md** - Record new business requirements or logic changes
+- **docs/IMPLEMENTATION.md** - Track implementation progress and status
+- **README.md** - Update setup, deployment, or usage instructions if changed
+- **Code comments** - Add or update JSDoc/TSDoc for new public APIs
+
+### Documentation Checklist (End of Session)
+
+- [ ] New files/directories documented in appropriate README or STRUCTURE.md
+- [ ] Architecture decisions recorded in ADRs or ARCHITECTURE.md
+- [ ] API changes reflected in documentation
+- [ ] Configuration changes documented
+- [ ] Testing strategy updated if new test patterns introduced
+- [ ] Dependencies added/removed documented
+
+Keep documentation synchronized with code — treat outdated docs as technical debt.
