@@ -40,8 +40,10 @@ output.
 Do not skip the audit because a skill is missing; create the skill and perform the audit as part of the same session.
 
 ## AI-Driven SDLC Regulatory Framework
-This repo ships a BMad-style, subagent-based SDLC that operationalizes the AI-Driven Software Development Lifecycle (now fully absorbed into the `sdlc-regulatory` skill). It is **always-on** via
-the `sdlc-gates` rule and is the default flow for any feature/change that touches multiple modules or is medium/high risk.
+
+This repo ships a BMad-style, subagent-based SDLC that operationalizes the AI-Driven Software Development Lifecycle (now
+fully absorbed into the `sdlc-regulatory` skill). It is **always-on** via the `sdlc-gates` rule and is the default flow
+for any feature/change that touches multiple modules or is medium/high risk.
 
 ### Components
 
@@ -61,9 +63,11 @@ requirement → sdlc-analyst → sdlc-pm → sdlc-architect → sdlc-sm
            → deploy (CI/CD, subject to the Deployment Gate)
 ```
 
-Each role owns one gate from the `sdlc-regulatory` skill. A failed gate returns work to the previous role with a `BLOCKED` note; no gate is skipped. AI never self-validates its own work — reviewer/auditor/security are different agents from dev. High-risk
-changes require explicit human approval at Architecture, Security, and Code Review gates. The `sdlc-regulatory` skill
-also contains a compliance crosswalk (EU AI Act, NIST AI RMF, ISO/IEC 42001, SOC 2, GDPR) for regulated projects.
+Each role owns one gate from the `sdlc-regulatory` skill. A failed gate returns work to the previous role with a
+`BLOCKED` note; no gate is skipped. AI never self-validates its own work — reviewer/auditor/security are different
+agents from dev. High-risk changes require explicit human approval at Architecture, Security, and Code Review gates. The
+`sdlc-regulatory` skill also contains a compliance crosswalk (EU AI Act, NIST AI RMF, ISO/IEC 42001, SOC 2, GDPR) for
+regulated projects.
 
 ### When to use
 
@@ -219,7 +223,10 @@ config is loaded once on startup and is not hot-reloaded.
 - Store R&D artifacts in the `docs/` directory:
     - `docs/BUSINESS_LOGIC.md` - Business requirements and logic
     - `docs/IMPLEMENTATION.md` - Implementation plan, status, and progress
-    - `docs/ARCHITECTURE.md` - Technical approaches, stack decisions, and architecture
+    - `docs/adr/NNNN-<slug>.md` - Architecture Decision Records
+
+The AI-Readable Codebase contract in the `sdlc-regulatory` skill also requires root-level `ARCHITECTURE.md`,
+`CONTRIBUTING.md`, and `SECURITY.md` files for any project the SDLC runs against. This repo maintains all of them.
 
 ## Architecture Approach Selection
 
@@ -235,7 +242,7 @@ complexity. Consider these patterns:
 - **Monolithic** - Single deployable unit containing all functionality, suitable for simpler applications
 
 Choose the approach based on project scope, team size, scalability requirements, and business logic complexity. Document
-the decision in `docs/ARCHITECTURE.md`.
+the decision in an ADR under `docs/adr/` and summarize it in root `ARCHITECTURE.md`.
 
 ## Security Guidelines
 
@@ -340,7 +347,8 @@ Create specialized AI agents with senior-level expertise in key domains:
 At the end of each session or task, review and update relevant documentation:
 
 - **AGENTS.md** - Update if new conventions, patterns, or structures were introduced
-- **docs/ARCHITECTURE.md** - Document architecture decisions and changes
+- **ARCHITECTURE.md** - Document architecture decisions and changes (root file; per the AI-Readable Codebase contract in
+  the `sdlc-regulatory` skill)
 - **docs/BUSINESS_LOGIC.md** - Record new business requirements or logic changes
 - **docs/IMPLEMENTATION.md** - Track implementation progress and status
 - **README.md** - Update setup, deployment, or usage instructions if changed
