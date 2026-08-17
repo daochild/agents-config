@@ -58,6 +58,11 @@ agents-config/
 ├── docs/                    # Project documentation
 ├── research/                # Research and investigation materials
 ├── resources/               # Project resources and assets
+├── .agents/                 # Cross-client agent config (agentskills.io compatible)
+│   ├── skills/              # Skill folders, each with SKILL.md
+│   ├── agents/              # Subagents
+│   ├── commands/            # Slash commands
+│   └── rules/               # Always-loaded rule files
 ├── .claude/                 # Claude Code project config
 │   ├── CLAUDE.md            # Claude Code instructions (sources AGENTS.md)
 │   ├── CLAUDE.local.md      # Personal overrides (gitignored)
@@ -97,22 +102,29 @@ agents-config/
   and only adds opencode-only notes.
 - `.claude/CLAUDE.md` is Claude Code's instructions file. It sources the
   root `AGENTS.md` so both tools see the same layout.
-- Skills live in `.opencode/skill/` (or `.opencode/skills/`) and
-  `.claude/skills/`. `opencode.json` declares both paths under
-  `skills.paths` so opencode auto-discovers the Claude-format skills.
+- `.agents/` is the cross-client configuration directory compatible with the
+  [Agent Skills](https://agentskills.io/) convention. It is optional; existing
+  `.claude/` and `.opencode/` directories remain authoritative for their
+  respective clients. The `.agents/` directory is intended as a shared fallback
+  so skills registered there are visible to any agent that scans the
+  `.agents/skills/` convention.
+- Skills live in `.opencode/skill/` (or `.opencode/skills/`), `.claude/skills/`,
+  and `.agents/skills/`. `opencode.json` declares all three paths under
+  `skills.paths` so opencode auto-discovers both Claude-format and Agent-Skills
+  skills.
 - The example `docs` subagent exists in both `.opencode/agent/docs.md` and
   `.claude/agents/docs.md`. Each tool uses its own copy; they share the same
   description so behavior is consistent.
 
 ## Adding a new component
 
-| Component       | opencode path             | Claude Code path           |
-| --------------- | ------------------------- | -------------------------- |
-| Subagent        | `.opencode/agent/<n>.md`  | `.claude/agents/<n>.md`    |
-| Skill           | `.opencode/skill/<n>/SKILL.md` | `.claude/skills/<n>/SKILL.md` |
-| Slash command   | `.opencode/command/<n>.md` | `.claude/commands/<n>.md`  |
-| Plugin          | `.opencode/plugin/<n>.ts` | n/a                        |
-| Always-on rule  | add to `opencode.json` `instructions` | add to `.claude/rules/` |
+| Component       | opencode path             | Claude Code path           | Agent Skills path          |
+| --------------- | ------------------------- | -------------------------- | -------------------------- |
+| Subagent        | `.opencode/agent/<n>.md`  | `.claude/agents/<n>.md`    | `.agents/agents/<n>.md`    |
+| Skill           | `.opencode/skill/<n>/SKILL.md` | `.claude/skills/<n>/SKILL.md` | `.agents/skills/<n>/SKILL.md` |
+| Slash command   | `.opencode/command/<n>.md` | `.claude/commands/<n>.md`  | `.agents/commands/<n>.md`  |
+| Plugin          | `.opencode/plugin/<n>.ts` | n/a                        | n/a                        |
+| Always-on rule  | add to `opencode.json` `instructions` | add to `.claude/rules/` | add to `.agents/rules/`    |
 
 ## Code Generation Pipeline
 
