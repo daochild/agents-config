@@ -23,6 +23,31 @@ Instructions:
 - If multiple interpretations are possible, explain the alternatives rather
   than assuming one is correct.
 
+## Audit Rule
+
+When the current task involves significant code changes — for example, after the
+first code-generation prompt or after substantial deviations from the agreed
+Statement of Work (SOW) — the agent MUST run a system audit before finalizing
+the output.
+
+1. **Pick the right auditor skill** for the domain of the change. Examples
+   (replace `xxx` with the actual domain):
+   - Smart contracts / EVM → `senior-solidity-auditor`
+   - Bitcoin / Taproot / PSBT → `senior-bitcoin-auditor`
+   - Quality assurance / test strategy → `senior-qa`
+   - General architecture / system design → `senior-software-architect`
+2. **Run the audit via the matching `xxx-auditor` skill.** Surface findings,
+   severity, and concrete remediation steps.
+3. **If the required skill does not exist locally, create it first:**
+   - Add `.opencode/skill/<xxx-auditor>/SKILL.md`
+   - Mirror to `.claude/skills/<xxx-auditor>/SKILL.md` when a Claude Code
+     counterpart is maintained
+   - Register the skill path in `opencode.json` if needed
+   - Then execute the audit using the newly created skill.
+
+Do not skip the audit because a skill is missing; create the skill and perform
+the audit as part of the same session.
+
 ## Layout
 
 ```
