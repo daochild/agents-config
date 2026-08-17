@@ -1,7 +1,7 @@
 # SDLC Gates (always-on)
 
 > Loaded from `.claude/rules/sdlc-gates.md` (Claude Code) and `.agents/rules/sdlc-gates.md` (cross-client).
-> Methodology detail: load the `sdlc-regulatory` skill or read `SOW.md`.
+> Methodology detail: load the `sdlc-regulatory` skill.
 
 ## Mandatory gate order
 
@@ -30,6 +30,15 @@ Any AI-generated change MUST pass these gates in order before it reaches product
 - Use the `sdlc-orchestrator` subagent when the change touches multiple modules, is medium/high risk, or spans multiple stages.
 - Inline (main agent only) is acceptable for documentation/test-generation only (autonomy 100%) and trivial internal refactoring (autonomy 80–100%).
 - For any change above ~50% autonomy cap, invoke the subagent flow.
+
+## AI-readable codebase precondition
+
+The Architecture Gate requires "existing architecture has been analyzed". That presupposes the repo is AI-readable (AI-Readable Codebase section of the `sdlc-regulatory` skill). Minimum required for any SDLC run:
+
+- `AGENTS.md` — layout + conventions
+- `ARCHITECTURE.md` — how the system works, constraints, stack
+
+If either is missing, the orchestrator must run a bootstrap pass (analyst + architect seed the files from existing code) before routing feature work. Do not proceed on an illegible codebase. See the `sdlc-regulatory` skill for the full required documentation structure and the 9 things the AI must be able to understand.
 
 ## Compliance reminder
 

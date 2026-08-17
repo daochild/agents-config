@@ -4,7 +4,7 @@ description: Run an AI-driven SDLC cycle for a product requirement or change
 
 /sdlc [requirement or change description]
 
-Invokes the `sdlc-orchestrator` subagent to route the given requirement through the BMad-style SDLC chain (analyst → pm → architect → sm → dev → qa → security → reviewer → auditor), enforcing all quality gates from `SOW.md` and the `sdlc-regulatory` skill.
+Invokes the `sdlc-orchestrator` subagent to route the given requirement through the BMad-style SDLC chain (analyst → pm → architect → sm → dev → qa → security → reviewer → auditor), enforcing all quality gates from the `sdlc-regulatory` skill.
 
 If no argument is given, the orchestrator will ask for the requirement first.
 
