@@ -1,6 +1,6 @@
 {
   "name": "@daochild/agents-config",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Shared, version-controlled configuration for AI coding agents (opencode and Claude Code): layout, skills, subagents, commands, rules, and an always-on AI-driven SDLC governance framework.",
   "keywords": [
     "agent",

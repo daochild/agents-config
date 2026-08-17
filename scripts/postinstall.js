@@ -5,7 +5,7 @@ const path = require('node:path');
 const process = require('node:process');
 
 const PACKAGE_NAME = '@daochild/agents-config';
-const POINTER_LINE = 'Primary instructions: node_modules/@daochild/agents-config/AGENTS.md — follow unless overridden below.';
+const POINTER_LINE = 'Primary instructions: node_modules/@daochild/agents-config/AGENTS.md — read in full and follow unless overridden below.';
 
 function notice(msg) {
   process.stdout.write(msg + '\n');

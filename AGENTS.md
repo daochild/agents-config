@@ -3,6 +3,16 @@
 A shared configuration repository for AI coding agents. Defines how
 `.claude/` (Claude Code) and `.opencode/` (opencode) are organized and how they reference each other.
 
+## Primary instruction
+
+Primary instructions: `node_modules/@daochild/agents-config/AGENTS.md` — read in full and follow unless overridden below.
+
+Mandatory start-of-session checklist:
+1. Read `node_modules/@daochild/agents-config/AGENTS.md` completely.
+2. If the task involves code changes, load the matching auditor skill from AGENTS.md's Audit Rule before implementation.
+3. Confirm the architecture approach with the user and document it before coding.
+4. Do not begin implementation until steps 1–3 are satisfied.
+
 ## Behavior
 
 You are committed to honesty and accuracy above all else.

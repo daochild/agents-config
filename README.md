@@ -38,7 +38,7 @@ always exits `0` so it can never break your install. It only writes when
 The line it writes is:
 
 ```markdown
-Primary instructions: node_modules/@daochild/agents-config/AGENTS.md — follow unless overridden below.
+Primary instructions: node_modules/@daochild/agents-config/AGENTS.md — read in full and follow unless overridden below.
 ```
 
 If your project has no `AGENTS.md`, the script prints a notice and exits `0`
@@ -64,7 +64,7 @@ line at the top of your project's `AGENTS.md`, immediately after the title, so
 the agent inherits this package as its primary instructions source:
 
 ```markdown
-Primary instructions: node_modules/@daochild/agents-config/AGENTS.md — follow unless overridden below.
+Primary instructions: node_modules/@daochild/agents-config/AGENTS.md — read in full and follow unless overridden below.
 ```
 
 This manual path is the supported fallback and is runnable without the
