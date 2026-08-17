@@ -25,15 +25,55 @@ pnpm add --save-dev @daochild/agents-config
 bun add --dev @daochild/agents-config
 ```
 
-Then add this one line at the top of your project's `AGENTS.md`, immediately after
-the title, so the agent inherits this package as its primary instructions source:
+### Automatic path (zero-edit)
+
+After `npm install`, this package's `postinstall` script automatically writes a
+single pointer line into your project's `AGENTS.md` (if one exists), idempotently
+and non-destructively. The script is deterministic (no network, no telemetry),
+scoped to your project root (`cwd`), never overwrites existing content, and
+always exits `0` so it can never break your install. It only writes when
+`@daochild/agents-config` is a **direct** dependency in your `package.json`
+(`dependencies` or `devDependencies`); transitive installs are left untouched.
+
+The line it writes is:
 
 ```markdown
 Primary instructions: node_modules/@daochild/agents-config/AGENTS.md — follow unless overridden below.
 ```
 
-Restart your agent session (opencode or Claude Code) so the new instructions take
-effect — config is loaded once at startup and is not hot-reloaded.
+If your project has no `AGENTS.md`, the script prints a notice and exits `0`
+without creating one. To have it create a minimal `AGENTS.md` (a title line
+followed by the pointer line), pass the explicit `--init` flag:
+
+```bash
+node node_modules/@daochild/agents-config/scripts/postinstall.js --init
+```
+
+**Known limitation (monorepo / workspace):** the script checks only the
+`package.json` in the directory where the install is running (`cwd`); it does
+not traverse parent or sibling workspace `package.json` files. In a monorepo
+where the dependency is declared in a sub-workspace but the install `cwd` is the
+workspace root (or vice versa), the automatic write may not fire. Use the manual
+path below in that case.
+
+### Manual path (supported fallback)
+
+If your CI policy rejects `postinstall`, you use `--ignore-scripts`, or the
+automatic path does not apply (e.g. the monorepo limitation above), add this one
+line at the top of your project's `AGENTS.md`, immediately after the title, so
+the agent inherits this package as its primary instructions source:
+
+```markdown
+Primary instructions: node_modules/@daochild/agents-config/AGENTS.md — follow unless overridden below.
+```
+
+This manual path is the supported fallback and is runnable without the
+`postinstall` ever having run.
+
+### After either path
+
+Restart your agent session (opencode or Claude Code) so the new instructions
+take effect — config is loaded once at startup and is not hot-reloaded.
 
 ## License
 

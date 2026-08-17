@@ -25,6 +25,7 @@ The SDLC regulatory framework was added in the current cycle and is the most rec
 | Domain skills                   | Done   | `.opencode/skill/{senior-qa,senior-solidity-auditor,senior-bitcoin-auditor,senior-frontend-dev,senior-software-developer,senior-ux-ui-designer,archivarius,data-engineer,find-skills,frontend-design}/` | Loaded on demand                           |
 | AI-readable contract files      | Done   | `ARCHITECTURE.md`, `CONTRIBUTING.md`, `SECURITY.md`, `docs/`                                                                                                                                            | This cycle                                 |
 | `index.js` entry                | Stub   | `package.json` → `main`                                                                                                                                                                                 | Placeholder; no runtime code yet           |
+| Postinstall pointer script      | Done   | `scripts/postinstall.js`, `package.json` → `scripts.postinstall`                                                                                                                                        | Per ADR 0002; constrained install-time helper |
 
 ## In progress
 
@@ -34,7 +35,7 @@ The SDLC regulatory framework was added in the current cycle and is the most rec
 
 | ID   | Item                                                         | Priority | Notes                                               |
 |------|--------------------------------------------------------------|----------|-----------------------------------------------------|
-| BL-1 | Add a real `index.js` entry if plugins need a host hook      | low      | Only if a plugin requires programmatic registration |
+| BL-1 | Add a real `index.js` entry if plugins need a host hook      | low      | Partially resolved (postinstall only); a full plugin host hook remains a separate concern. `package.json` `main: "index.js"` is unchanged — the postinstall script (`scripts/postinstall.js`) is a constrained install-time helper per ADR 0002, not the package's main entry. Reconciling `main` with a real `index.js` host hook is still open. |
 | BL-2 | Seed `docs/api/` if the plugin interface becomes public      | low      | Config-only repo has no public API today            |
 | BL-3 | Seed `docs/database/` if any stateful metadata is introduced | low      | Config-only repo has no database                    |
 | BL-4 | Add CI workflow to verify triple-mirror consistency on PR    | medium   | See `CONTRIBUTING.md` verify script                 |
@@ -55,3 +56,4 @@ version"; the "Observability" item is satisfied by
 | 2026-08-18 | Bumped version to 1.1.0 (minor) for the SDLC feature release; updated `package.json` description and keywords to reflect the SDLC/governance scope.                                                                          | maintainer |
 | 2026-08-18 | Simplified `README.md` install section: collapsed "After installation" into "Installation"; replaced 3-line `AGENTS.md` block with a single pointer line. No contract change (no postinstall/bin; respects the "no runtime code" invariant). | maintainer |
 | 2026-08-18 | Added SDLC regulatory framework (skill + 10 subagents + rule + command); absorbed `SOW.md` into the skill; deleted `SOW.md`; added AI-readable contract files (`ARCHITECTURE.md`, `CONTRIBUTING.md`, `SECURITY.md`, `docs/`) | maintainer |
+| 2026-08-18 | Implemented postinstall zero-edit install (S02+S03+S04+S06) per ADR 0002 + architecture artifact. Added `scripts/postinstall.js` (CommonJS, Node built-ins only) wired via `package.json` `scripts.postinstall`; updated `README.md` to document both the automatic (postinstall) and manual (one-line edit) paths; updated BL-1 status to "Partially resolved (postinstall only)". Narrowed `ARCHITECTURE.md` rule 6 and `docs/BUSINESS_LOGIC.md` non-goal per ADR 0002. `SECURITY.md` update deferred to the Security Gate (S05); tests deferred to the Testing Gate (S07). | sdlc-dev (Implementation Gate) |

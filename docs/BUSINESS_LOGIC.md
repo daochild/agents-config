@@ -36,7 +36,9 @@ configuration source** so that:
 
 ## Non-goals
 
-- This repo does not ship runtime application code.
+- This repo does not ship runtime *application* code. A constrained install-time file-pointer
+  helper (`scripts/postinstall.js`, per [ADR 0002](adr/0002-zero-edit-install.md)) is
+  permitted; it is not application code (no business logic, no service, no long-running process).
 - This repo does not deploy anything; it has no `services/`, `tests/`, or
   `infrastructure/` of its own (those dirs are part of the contract for consuming projects, not for this config
   package).

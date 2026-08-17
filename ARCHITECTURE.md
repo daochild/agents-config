@@ -71,9 +71,13 @@ agents-config (this repo)
    mirror covers Agent-Skills-compatible clients.
 5. **Config is loaded once at startup.** After editing `opencode.json`, an agent file, a skill, a plugin, or a command,
    restart opencode. No hot reload.
-6. **No runtime code.** This repo's "code" is configuration. The only JS is the opencode plugin host
-   (`@opencode-ai/plugin` dependency) and any
-   `.opencode/plugin/*.ts|.js` the user adds. There is no `src/`, no build output, no deployable service.
+6. **No runtime *application* code.** This repo's "code" is configuration. The only JS is the
+   opencode plugin host (`@opencode-ai/plugin` dependency), any
+   `.opencode/plugin/*.ts|.js` the user adds, **and one constrained install-time file-pointer
+   helper (`scripts/postinstall.js`) permitted by [ADR 0002](docs/adr/0002-zero-edit-install.md)**.
+   There is no `src/`, no build output, no deployable service, no long-running process. (Rule 6
+   narrowed by ADR 0002 from "No runtime code" to "No runtime *application* code"; a single
+   bounded install-time helper is permitted.)
 
 ## Key decisions
 
@@ -97,24 +101,38 @@ agents-config (this repo)
 - The triple-mirror invariant for any component already published to consumers (deleting a mirror breaks that client).
 - The `sdlc-regulatory` skill's gate checklists and risk-autonomy table (these are the control surface; relaxing them is
   a high-risk change per the skill's own risk model).
+- **The `postinstall` script's contract (per [ADR 0002](docs/adr/0002-zero-edit-install.md))**:
+  idempotency, safe-append (never overwrite), exit-0 (every path), cwd-scoped (no traversal
+  outside the consumer root), deterministic (no network/telemetry/`Date`/`Math.random`; no
+  `http`/`https`/`net`/`fetch`/`dns`/`child_process` imports), direct-dependency-only (transitive
+  suppression; `peerDependencies`/`optionalDependencies` do NOT count as direct), and pointer-line
+  content (the em dash `—` U+2014 and the exact wording — see ADR 0002). Relaxing any clause is a
+  high-risk change requiring human approval at the Architecture, Security, and Code Review gates.
 
 ## Constraints
 
 - Node.js stack; package type `commonjs`; main entry `index.js` (currently a placeholder — see `package.json`).
+- **Install-time helper:** `scripts/postinstall.js` (CommonJS, Node built-ins only — `fs`,
+  `path`, `process`; no new runtime dependency) is the one constrained runtime entry permitted by
+  [ADR 0002](docs/adr/0002-zero-edit-install.md). It writes a single pointer line into the
+  consumer's `AGENTS.md` after `npm install`, idempotently, safe-append only, cwd-scoped,
+  deterministic, exit-0, and only for direct dependencies (transitive installs are suppressed).
+  See ADR 0002 for the full binding contract.
 - `.gitignore` excludes `node_modules`, `.idea`, `.vscode`, `*.logs`.
 - `.npmignore` excludes tests, coverage, CI configs, linters, editor settings,
   `.env*`, `secrets`.
 
 ## Stack
 
-| Concern         | Choice                                                          |
-|-----------------|-----------------------------------------------------------------|
-| Package manager | npm / yarn / pnpm / bun (consumer's choice)                     |
-| Runtime         | Node.js (plugin host only)                                      |
-| Config format   | JSON (`opencode.json`), Markdown (agents/skills/rules/commands) |
-| Schema          | `https://opencode.ai/config.json`                               |
-| Plugin SDK      | `@opencode-ai/plugin`                                           |
-| License         | MIT                                                             |
+| Concern              | Choice                                                          |
+|----------------------|-----------------------------------------------------------------|
+| Package manager      | npm / yarn / pnpm / bun (consumer's choice)                     |
+| Runtime              | Node.js (plugin host only; + one install-time helper, ADR 0002) |
+| Install-time helper  | `scripts/postinstall.js` (CommonJS; Node built-ins only)        |
+| Config format        | JSON (`opencode.json`), Markdown (agents/skills/rules/commands) |
+| Schema               | `https://opencode.ai/config.json`                               |
+| Plugin SDK           | `@opencode-ai/plugin`                                           |
+| License              | MIT                                                             |
 
 ## See also
 
