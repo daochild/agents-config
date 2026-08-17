@@ -3,7 +3,8 @@
   "instructions": [
     "AGENTS.md",
     ".opencode/AGENTS.md",
-    ".claude/rules/programming-best-practices.md"
+    ".claude/rules/programming-best-practices.md",
+    ".claude/rules/sdlc-gates.md"
   ],
   "skills": {
     "paths": [
@@ -18,6 +19,56 @@
       "description": "Answers questions about this agents-config repo layout and how .claude/ and .opencode/ link together.",
       "mode": "subagent",
       "prompt": "{file:./.opencode/agent/docs.md}"
+    },
+    "sdlc-orchestrator": {
+      "description": "Orchestrates the AI-driven SDLC by routing a product requirement through the BMad-style role subagents (analyst -> pm -> architect -> sm -> dev -> qa -> security -> reviewer -> auditor). Use as the single entry point for any feature/change that touches multiple modules or is medium/high risk.",
+      "mode": "subagent",
+      "prompt": "{file:./.opencode/agent/sdlc-orchestrator.md}"
+    },
+    "sdlc-analyst": {
+      "description": "Requirements analyst for the AI-driven SDLC. Translates a raw product idea or change request into a market/context analysis and confirms the requirement is well-formed. First role in the BMad-style chain.",
+      "mode": "subagent",
+      "prompt": "{file:./.opencode/agent/sdlc-analyst.md}"
+    },
+    "sdlc-pm": {
+      "description": "Product Manager for the AI-driven SDLC. Turns the analyst's output into a PRD with acceptance criteria and edge cases. Completes the Requirement Gate.",
+      "mode": "subagent",
+      "prompt": "{file:./.opencode/agent/sdlc-pm.md}"
+    },
+    "sdlc-architect": {
+      "description": "Architect for the AI-driven SDLC. Analyzes existing architecture, identifies impacted modules and dependencies, proposes a solution, and creates/updates the ADR. Owns the Architecture Gate.",
+      "mode": "subagent",
+      "prompt": "{file:./.opencode/agent/sdlc-architect.md}"
+    },
+    "sdlc-sm": {
+      "description": "Scrum Master / planner for the AI-driven SDLC. Breaks the architecture into implementable stories, classifies each story's risk, and assigns an AI autonomy cap. Completes the Architecture Gate and seeds traceability.",
+      "mode": "subagent",
+      "prompt": "{file:./.opencode/agent/sdlc-sm.md}"
+    },
+    "sdlc-dev": {
+      "description": "Developer for the AI-driven SDLC. Implements stories following project patterns, documents AI assumptions, and stays in scope. Owns the Implementation Gate.",
+      "mode": "subagent",
+      "prompt": "{file:./.opencode/agent/sdlc-dev.md}"
+    },
+    "sdlc-qa": {
+      "description": "QA engineer for the AI-driven SDLC. Designs the test plan, writes unit/integration/regression/edge-case tests, and runs the existing suite. Owns the Testing Gate. Uses the senior-qa skill for methodology.",
+      "mode": "subagent",
+      "prompt": "{file:./.opencode/agent/sdlc-qa.md}"
+    },
+    "sdlc-security": {
+      "description": "Security reviewer for the AI-driven SDLC. Runs SAST, dependency and secrets scanning, and a security-focused AI review; validates authN/Z where applicable. Owns the Security Gate. Uses domain-specific senior-*-auditor skills when relevant.",
+      "mode": "subagent",
+      "prompt": "{file:./.opencode/agent/sdlc-security.md}"
+    },
+    "sdlc-reviewer": {
+      "description": "Code reviewer for the AI-driven SDLC. Performs the AI technical code review and aggregates the human engineering review. Owns the Code Review Gate.",
+      "mode": "subagent",
+      "prompt": "{file:./.opencode/agent/sdlc-reviewer.md}"
+    },
+    "sdlc-auditor": {
+      "description": "Auditor for the AI-driven SDLC. Verifies the Definition of Done across all prior gates, confirms traceability, and produces the final audit artifact. Owns the DoD Gate. Must be a different agent from those who produced the work.",
+      "mode": "subagent",
+      "prompt": "{file:./.opencode/agent/sdlc-auditor.md}"
     }
   }
 }

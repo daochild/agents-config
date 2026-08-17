@@ -48,6 +48,51 @@ the output.
 Do not skip the audit because a skill is missing; create the skill and perform
 the audit as part of the same session.
 
+## AI-Driven SDLC Regulatory Framework
+
+This repo ships a BMad-style, subagent-based SDLC that operationalizes
+`SOW.md` (AI-Driven Software Development Lifecycle). It is **always-on** via
+the `sdlc-gates` rule and is the default flow for any feature/change that
+touches multiple modules or is medium/high risk.
+
+### Components
+
+| Component | Path (opencode) | Claude mirror | Agent Skills mirror |
+|-----------|-----------------|---------------|----------------------|
+| Methodology skill | `.opencode/skill/sdlc-regulatory/SKILL.md` | `.claude/skills/sdlc-regulatory/SKILL.md` | `.agents/skills/sdlc-regulatory/SKILL.md` |
+| Always-on rule | `.claude/rules/sdlc-gates.md` (also in `opencode.json` instructions) | same | `.agents/rules/sdlc-gates.md` |
+| Orchestrator subagent | `.opencode/agent/sdlc-orchestrator.md` | `.claude/agents/sdlc-orchestrator.md` | `.agents/agents/sdlc-orchestrator.md` |
+| Role subagents (×9) | `.opencode/agent/sdlc-{analyst,pm,architect,sm,dev,qa,security,reviewer,auditor}.md` | mirrored (Claude Code frontmatter, no `mode:`) | mirrored verbatim |
+| `/sdlc` slash command | `.opencode/command/sdlc.md` | `.claude/commands/sdlc.md` | `.agents/commands/sdlc.md` |
+
+### SDLC chain
+
+```
+requirement → sdlc-analyst → sdlc-pm → sdlc-architect → sdlc-sm
+           → sdlc-dev → sdlc-qa → sdlc-security → sdlc-reviewer → sdlc-auditor
+           → deploy (CI/CD, subject to the Deployment Gate)
+```
+
+Each role owns one gate from `SOW.md`. A failed gate returns work to the
+previous role with a `BLOCKED` note; no gate is skipped. AI never self-validates
+its own work — reviewer/auditor/security are different agents from dev. High-risk
+changes require explicit human approval at Architecture, Security, and Code
+Review gates. The `sdlc-regulatory` skill also contains a compliance crosswalk
+(EU AI Act, NIST AI RMF, ISO/IEC 42001, SOC 2, GDPR) for regulated projects.
+
+### When to use
+
+- **Full `/sdlc` flow**: any change touching multiple modules, medium/high risk,
+  or requiring traceability/compliance artifacts.
+- **Inline (main agent only)**: documentation, test generation, trivial internal
+  refactoring (autonomy 80–100%). Still subject to the `sdlc-gates` rule.
+- **Above ~50% autonomy cap**: must use the full flow with human approvals.
+
+See the `sdlc-regulatory` skill for the full gate checklists, risk-autonomy
+table, traceability format, and the compliance crosswalk. Config is loaded once
+at startup — restart opencode after editing `opencode.json`, agents, skills,
+plugins, or commands.
+
 ## Layout
 
 ```

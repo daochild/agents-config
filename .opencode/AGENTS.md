@@ -21,3 +21,14 @@ Read the root `AGENTS.md` first for: directory layout, where skills / agents
 - Skills may be shared with Claude Code: `opencode.json` lists
   `.claude/skills` under `skills.paths`, so a Claude-format skill in
   `.claude/skills/<name>/SKILL.md` is auto-discovered by opencode.
+
+## SDLC subagents
+
+The `sdlc-*` role subagents (orchestrator + 9 roles) are registered under
+`agent` in `opencode.json` and dispatched via the `/sdlc` command. They use
+the opencode frontmatter (`mode: subagent`). The Claude Code mirrors in
+`.claude/agents/` omit the `mode:` field per Claude Code's format. The
+`.agents/agents/` mirrors keep the opencode frontmatter verbatim for any
+Agent-Skills-compatible client. The methodology lives in the
+`sdlc-regulatory` skill (triple-mirrored); the `sdlc-gates` rule is
+always-on via `opencode.json` instructions and `.claude/rules/`.
