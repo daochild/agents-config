@@ -52,4 +52,5 @@ version"; the "Observability" item is satisfied by
 
 | Date       | Change                                                                                                                                                                                                                       | Author     |
 |------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| 2026-08-18 | Bumped version to 1.1.0 (minor) for the SDLC feature release; updated `package.json` description and keywords to reflect the SDLC/governance scope.                                                                          | maintainer |
 | 2026-08-18 | Added SDLC regulatory framework (skill + 10 subagents + rule + command); absorbed `SOW.md` into the skill; deleted `SOW.md`; added AI-readable contract files (`ARCHITECTURE.md`, `CONTRIBUTING.md`, `SECURITY.md`, `docs/`) | maintainer |

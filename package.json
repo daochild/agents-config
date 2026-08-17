@@ -1,14 +1,20 @@
 {
   "name": "@daochild/agents-config",
-  "version": "1.0.7",
-  "description": "Instructions for agentic coding pipelines.",
+  "version": "1.1.0",
+  "description": "Shared, version-controlled configuration for AI coding agents (opencode and Claude Code): layout, skills, subagents, commands, rules, and an always-on AI-driven SDLC governance framework.",
   "keywords": [
     "agent",
     "AI",
     "instructions",
     "pipeline",
     "no-code",
-    "less-code"
+    "less-code",
+    "sdlc",
+    "governance",
+    "compliance",
+    "gates",
+    "opencode",
+    "claude-code"
   ],
   "homepage": "https://github.com/daochild/agents-config#readme",
   "bugs": {

@@ -56,4 +56,5 @@ a business requirement (BR-4 through BR-7).
 
 | Date       | Change                                          | Author     |
 |------------|-------------------------------------------------|------------|
+| 2026-08-18 | Bumped version to 1.1.0; broadened package metadata (description/keywords) to cover the SDLC governance scope introduced today | maintainer |
 | 2026-08-18 | Initial creation; absorbed SOW business context | maintainer |
