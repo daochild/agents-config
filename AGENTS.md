@@ -165,6 +165,14 @@ agents-config/
 | Plugin         | `.opencode/plugin/<n>.ts`             | n/a                           | n/a                           |
 | Always-on rule | add to `opencode.json` `instructions` | add to `.claude/rules/`       | add to `.agents/rules/`       |
 
+## Harness engineering
+
+The always-on `harness-engineering` rule and triple-mirrored skill provide shared guidance
+for reliable agent workflows. Load the skill when designing or changing agent context,
+tools, permissions, approvals, verification, or telemetry. The consuming agent host—not
+these configuration files—must enforce authorization, isolation, approvals, and runtime
+limits.
+
 ## Code Generation Pipeline
 
 To create an agent for code generation tasks:

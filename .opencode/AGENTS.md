@@ -32,3 +32,10 @@ the opencode frontmatter (`mode: subagent`). The Claude Code mirrors in
 Agent-Skills-compatible client. The methodology lives in the
 `sdlc-regulatory` skill (triple-mirrored); the `sdlc-gates` rule is
 always-on via `opencode.json` instructions and `.claude/rules/`.
+
+## Harness engineering
+
+The shared `harness-engineering` skill is available in all configured skill paths. Its
+always-on rule is included in `opencode.json` instructions. These files provide design
+guidance only; the consumer's agent host enforces authorization, approvals, isolation, and
+runtime limits.

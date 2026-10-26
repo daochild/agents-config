@@ -93,6 +93,11 @@ agents-config (this repo)
 - **SDLC regulatory framework.** The `sdlc-*` subagents + `sdlc-regulatory` skill +
   `sdlc-gates` rule implement the AI-Driven SDLC. The skill is the source of truth for the methodology (it superseded
   the deleted `SOW.md`). The orchestrator is the single entry point via the `/sdlc` command.
+- **Harness engineering guidance.** The `harness-engineering` skill and always-on rule are
+  mirrored across `.opencode/`, `.claude/`, and `.agents/`. They describe context selection,
+  host-enforced policy, bounded execution, independent verification, and privacy-aware
+  observability. They are guidance only; consuming runtimes enforce permissions, approvals,
+  isolation, and execution limits.
 
 ## What must NOT be changed without human approval
 
@@ -141,3 +146,4 @@ agents-config (this repo)
 - `SECURITY.md` — security policy and the LLM security rule.
 - `docs/` — business logic, implementation status, architecture deep-dives, ADRs.
 - `.opencode/skill/sdlc-regulatory/SKILL.md` — AI-Driven SDLC methodology (source of truth for the SDLC controls).
+- `.opencode/skill/harness-engineering/SKILL.md` — shared agent reliability guidance; runtime enforcement remains the consuming host's responsibility.

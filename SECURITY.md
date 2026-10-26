@@ -54,6 +54,13 @@ Security concerns are therefore primarily:
   pinned and monitor advisories.
 - **Permission overreach** in `opencode.json` agent `permission` blocks — prefer
   `ask` over `allow` for `edit` and `bash` on any agent that touches production.
+- **Model-only policy enforcement** — prompts and skills do not authorize actions or
+  isolate tools. The consuming host must check identity, scope, and arguments at each
+  side-effect boundary, fail closed when authorization is unclear, and pause for required
+  human approval.
+- **Sensitive observability data** — agent traces can contain secrets or personal data.
+  Record only operational fields needed for diagnosis; redact sensitive values and apply
+  access and retention controls. Do not log private model reasoning by default.
 - **SDLC gate bypass** — any change that weakens a gate, removes a reviewer, or
   raises an autonomy cap is a high-risk security change requiring human approval.
 
@@ -75,5 +82,6 @@ lists. This policy does not replace legal review.
 
 - `AGENTS.md` → "Security Guidelines"
 - `sdlc-regulatory` skill → Security Gate checklist + compliance crosswalk
+- `.opencode/skill/harness-engineering/SKILL.md` → harness design guidance and host/runtime boundary
 - `CONTRIBUTING.md` → SDLC changes are high-risk
 - `.gitignore`, `.npmignore` — what is excluded from repo and package

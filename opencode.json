@@ -4,7 +4,8 @@
     "AGENTS.md",
     ".opencode/AGENTS.md",
     ".claude/rules/programming-best-practices.md",
-    ".claude/rules/sdlc-gates.md"
+    ".claude/rules/sdlc-gates.md",
+    ".claude/rules/harness-engineering.md"
   ],
   "skills": {
     "paths": [

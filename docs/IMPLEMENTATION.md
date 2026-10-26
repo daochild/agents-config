@@ -17,7 +17,8 @@ The SDLC regulatory framework was added in the current cycle and is the most rec
 | opencode config                 | Done   | `opencode.json`                                                                                                                                                                                         | Schema-pinned; 11 agents registered        |
 | Cross-client fallback           | Done   | `.agents/`                                                                                                                                                                                              | Verbatim mirrors                           |
 | Claude Code config              | Done   | `.claude/`                                                                                                                                                                                              | `CLAUDE.md` sources `AGENTS.md`            |
-| Always-on rules                 | Done   | `.claude/rules/`, `.agents/rules/`, `opencode.json` instructions                                                                                                                                        | `programming-best-practices`, `sdlc-gates` |
+| Always-on rules                 | Done   | `.claude/rules/`, `.agents/rules/`, `opencode.json` instructions                                                                                                                                        | `programming-best-practices`, `sdlc-gates`, `harness-engineering` |
+| Harness engineering guidance    | Done   | `.opencode/skill/harness-engineering/` (+ mirrors); `.claude/rules/`, `.agents/rules/`, `opencode.json`                                                                                                                                                               | Context, host-enforced policy, bounded tools, independent verification, privacy-aware observability |
 | SDLC regulatory skill           | Done   | `.opencode/skill/sdlc-regulatory/` (+ mirrors)                                                                                                                                                          | Supersedes deleted `SOW.md`                |
 | SDLC orchestrator               | Done   | `.opencode/agent/sdlc-orchestrator.md` (+ mirrors)                                                                                                                                                      | Entry point for `/sdlc`                    |
 | SDLC role subagents (×9)        | Done   | `.opencode/agent/sdlc-{analyst,pm,architect,sm,dev,qa,security,reviewer,auditor}.md` (+ mirrors)                                                                                                        | One per gate                               |
@@ -40,6 +41,7 @@ The SDLC regulatory framework was added in the current cycle and is the most rec
 | BL-3 | Seed `docs/database/` if any stateful metadata is introduced | low      | Config-only repo has no database                    |
 | BL-4 | Add CI workflow to verify triple-mirror consistency on PR    | medium   | See `CONTRIBUTING.md` verify script                 |
 | BL-5 | Record an ADR for the triple-mirror decision                 | low      | `docs/adr/0001-triple-mirror.md`                    |
+| BL-6 | Operationalize harness engineering principles in shared config | medium | Implemented as triple-mirrored skill and always-on rule; runtime enforcement remains the consumer host's responsibility. |
 
 ## Definition of Done (per the `sdlc-regulatory` skill)
 
@@ -51,8 +53,13 @@ version"; the "Observability" item is satisfied by
 
 ## Change log
 
+2026-10-27: Implemented shared harness-engineering guidance and host/runtime boundaries; see
+the `harness-engineering` story and assumptions log for scope, validation, review, and gate
+limitations.
+
 | Date       | Change                                                                                                                                                                                                                       | Author     |
 |------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| 2026-10-26 | Researched harness engineering sources, assessed the supplied six-component model, and documented a configuration-only implementation proposal. No runtime or agent configuration behavior changed; architecture approval is pending. | maintainer |
 | 2026-08-18 | Bumped version to 1.1.0 (minor) for the SDLC feature release; updated `package.json` description and keywords to reflect the SDLC/governance scope.                                                                          | maintainer |
 | 2026-08-18 | Simplified `README.md` install section: collapsed "After installation" into "Installation"; replaced 3-line `AGENTS.md` block with a single pointer line. No contract change (no postinstall/bin; respects the "no runtime code" invariant). | maintainer |
 | 2026-08-18 | Added SDLC regulatory framework (skill + 10 subagents + rule + command); absorbed `SOW.md` into the skill; deleted `SOW.md`; added AI-readable contract files (`ARCHITECTURE.md`, `CONTRIBUTING.md`, `SECURITY.md`, `docs/`) | maintainer |
