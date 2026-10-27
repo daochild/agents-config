@@ -1,6 +1,6 @@
 {
   "name": "@daochild/agents-config",
-  "version": "1.2.1",
+  "version": "1.3.2",
   "description": "Shared, version-controlled configuration for AI coding agents (opencode and Claude Code): layout, skills, subagents, commands, rules, and an always-on AI-driven SDLC governance framework.",
   "keywords": [
     "agent",
@@ -29,10 +29,15 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --test",
+    "sdlc:check": "node scripts/sdlc-session-check.js",
     "postinstall": "node scripts/postinstall.js"
   },
   "dependencies": {
     "@opencode-ai/plugin": "^1.18.18"
+  },
+  "overrides": {
+    "zod": "^4.6.6",
+    "toml": "^5.0.1"
   }
 }

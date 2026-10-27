@@ -75,6 +75,43 @@ This manual path is the supported fallback and is runnable without the
 Restart your agent session (opencode or Claude Code) so the new instructions
 take effect — config is loaded once at startup and is not hot-reloaded.
 
+## Read-only SDLC session diagnostic
+
+Run a small documentation-analysis task through OpenCode and check whether the
+response addresses the SDLC gates without changing the repository:
+
+```bash
+npm run sdlc:check
+# Optional: select another configured model, including a provider's free model
+npm run sdlc:check -- --model provider/model
+```
+
+The default model candidate is `opencode/beam-free`; model availability and
+provider requirements can change, so use `--model` for a currently available
+free model. OpenCode CLI and an authenticated provider are required.
+
+The runner injects explicit read-only OpenCode permissions, denies shell and
+subagent access, and hashes repository files before and after the session
+(including ignored files, excluding `.git`). It writes one private
+session directory under `~/.local/state/agents-config/sdlc-session-checks/`
+containing `events.jsonl` and `summary.json`. These logs contain tool names,
+statuses, observed SDLC subagents, and gate-mention checks only; they do not
+store the prompt, response, tool arguments, or tool outputs. OpenCode itself
+may retain its normal session history according to its own configuration.
+
+`Assessment: PASS` means the diagnostic task completed, no file-write tool or
+other disallowed tool was attempted, repository contents stayed unchanged, and
+the response reported a risk classification plus a status for every gate. A
+blocked shell attempt still makes the assessment fail, but the file snapshot
+shows whether anything changed. This is a read-only smoke check, not proof that
+an agent obeys policy in every session or that a gate was actually
+approved/passed. The permission policy governs OpenCode tool calls, not
+arbitrary side effects from external plugins or host processes; use an
+OS-level read-only sandbox when those must be excluded as well. Run tests
+without OpenCode using `npm test`. Gate labels/statuses and risk classification
+are heuristic checks of the response, not independent validation that its
+claims are accurate or that the underlying gates passed.
+
 ## License
 
 MIT
