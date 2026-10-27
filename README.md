@@ -10,6 +10,7 @@ The package is intended for production‑grade automation: version control, CI/C
 - **Shared instruction sources** — OpenCode-facing agents, commands, rules, and skills are organized under `instructions/`; `opencode.json` declares the paths used by OpenCode. Keep configured paths aligned with the files and maintain Claude Code or Agent Skills counterparts when required; see `AGENTS.md` and `CONTRIBUTING.md`.
 - **AI-Driven SDLC framework** — `sdlc-regulatory` skill + 10 `sdlc-*` subagents + `sdlc-gates` rule + `/sdlc` command. Gates run in order (requirement → architecture → implementation → testing → security → review → deployment → DoD), AI never self-validates, high-risk changes require human approval, and a compliance crosswalk covers EU AI Act / NIST AI RMF / ISO 42001 / SOC 2 / GDPR.
 - **Domain skills** — `senior-qa`, `senior-solidity-auditor`, `senior-bitcoin-auditor`, `senior-frontend-dev`, `senior-software-developer`, `senior-ux-ui-designer`, `archivarius`, `data-engineer`, `find-skills`, `frontend-design`.
+- **Externally sourced skill** — `security-audit` is maintained at `.agents/skills/security-audit/` and sourced from `cloudflare/security-audit-skill`. Its source and computed hash are recorded in `skills-lock.json`. It follows the Agent Skills layout and is separate from OpenCode's `instructions/skills` discovery path.
 - **Always-on rules** — `programming-best-practices` and `sdlc-gates`.
 - **AI-readable contract** — `ARCHITECTURE.md`, `CONTRIBUTING.md`, `SECURITY.md`, `docs/` (business logic, implementation status, ADRs).
 

@@ -64,6 +64,10 @@ point their `AGENTS.md` at
   agent files omit `mode:`. `.agents/` counterparts retain OpenCode frontmatter.
 - **Explicit skill discovery.** `opencode.json` lists `instructions/skills`; keep this path aligned with the actual
   skill source directory when changing the layout.
+- **External skill provenance.** The imported `security-audit` Agent Skill lives under
+  `.agents/skills/security-audit/`; `skills-lock.json` records its upstream source and computed hash. Keep it
+  documented separately from OpenCode's `instructions/skills` discovery path. See
+  [ADR 0003](docs/adr/0003-document-external-skill.md).
 - **SDLC regulatory framework.** The `sdlc-*` subagents + `sdlc-regulatory` skill +
   `sdlc-gates` rule implement the AI-Driven SDLC. The skill is the source of truth for the methodology (it superseded
   the deleted `SOW.md`). The orchestrator is the single entry point via the `/sdlc` command.
@@ -121,3 +125,4 @@ point their `AGENTS.md` at
 - `docs/` — business logic, implementation status, architecture deep-dives, ADRs.
 - `instructions/skills/sdlc-regulatory/SKILL.md` — AI-Driven SDLC methodology (source of truth for the SDLC controls).
 - `instructions/skills/harness-engineering/SKILL.md` — shared agent reliability guidance; runtime enforcement remains the consuming host's responsibility.
+- `docs/adr/0003-document-external-skill.md` — documents the source and discovery boundary for externally sourced skills.
