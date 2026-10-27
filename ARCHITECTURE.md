@@ -15,54 +15,15 @@ Published to npm as `@daochild/agents-config` and intended to be installed as a 
 point their `AGENTS.md` at
 `node_modules/@daochild/agents-config/AGENTS.md` to inherit this repo's conventions.
 
-## System diagram
-
-```
-Consuming project
-   │
-   │  AGENTS.md → "Primary instructions are located at:
-   │               node_modules/@daochild/agents-config/AGENTS.md"
-   ▼
-agents-config (this repo)
-   │
-   ├── AGENTS.md .................. single source of truth (layout + conventions)
-   │
-   ├── opencode.json .............. opencode project config
-   │      ├─ instructions[] ....... always-loaded files (AGENTS.md, rules)
-   │      ├─ skills.paths[] ....... skill discovery dirs
-   │      └─ agent{} .............. subagent registry ({file:./.opencode/agent/<n>.md})
-   │
-   ├── .opencode/ ................. opencode-native config
-   │      ├─ agent/ ............... subagent definitions (opencode frontmatter, mode: subagent)
-   │      ├─ skill/ ............... skills (each <n>/SKILL.md)
-   │      ├─ command/ ............. slash commands
-   │      └─ plugin/ ............. local plugins (*.ts/*.js)
-   │
-   ├── .claude/ .................. Claude Code-native config
-   │      ├─ CLAUDE.md ............ Claude instructions (@AGENTS.md)
-   │      ├─ agents/ .............. subagents (Claude Code frontmatter — NO mode: field)
-   │      ├─ skills/ .............. skills (auto-discovered by opencode via skills.paths)
-   │      ├─ commands/ ............ slash commands
-   │      └─ rules/ ............... always-on rules (also listed in opencode.json instructions)
-   │
-   └── .agents/ ................... cross-client fallback (Agent Skills / agentskills.io)
-          ├─ agents/ .............. verbatim opencode frontmatter
-          ├─ skills/ .............. verbatim SKILL.md
-          ├─ commands/ ............ verbatim
-          └─ rules/ ............... verbatim
-```
-
 ## Architectural rules
 
 1. **`AGENTS.md` is the single source of truth.** Both opencode (via `opencode.json`
    → `instructions`) and Claude Code (via `.claude/CLAUDE.md` → `@AGENTS.md`) read it. Never duplicate layout/convention
    content in tool-specific files; reference it.
-2. **Triple-mirror for components that must work in all clients.** A new subagent / skill / command / rule goes in
-   `.opencode/`, `.claude/`, and `.agents/`. The
-   `.opencode/` copy is authoritative for opencode; `.claude/` is authoritative for Claude Code; `.agents/` is a
-   verbatim cross-client fallback. See `AGENTS.md` →
-   "Adding a new component" for the per-format differences (e.g. Claude Code subagents omit the `mode:` frontmatter
-   field).
+2. **Shared instruction sources.** OpenCode-facing agents, commands, rules, and skills are organized under
+   `instructions/{agent,command,rules,skills}/` and registered through `opencode.json`. Add `.claude/` and `.agents/`
+   counterparts for clients that need them, following the per-format differences in `AGENTS.md` (for example, Claude
+   Code subagents omit the `mode:` frontmatter field). Keep the source and any maintained counterparts synchronized.
 3. **Skills are the methodology layer; subagents are thin.** Subagent `.md` files hold the role description,
    responsibilities, and handoff protocol. Deep methodology (gate checklists, risk tables, compliance crosswalks) lives
    in skills (`<n>/SKILL.md`) so it can be loaded by any agent or reviewer.
@@ -73,7 +34,7 @@ agents-config (this repo)
    restart opencode. No hot reload.
 6. **No runtime *application* code.** This repo's "code" is configuration. The only JS is the
    opencode plugin host (`@opencode-ai/plugin` dependency), any
-   `.opencode/plugin/*.ts|.js` the user adds, **and one constrained install-time file-pointer
+   `plugin/*.ts|.js` the user adds, **and one constrained install-time file-pointer
    helper (`scripts/postinstall.js`) permitted by [ADR 0002](docs/adr/0002-zero-edit-install.md)**.
    There is no `src/`, no build output, no deployable service, no long-running process. (Rule 6
    narrowed by ADR 0002 from "No runtime code" to "No runtime *application* code"; a single
@@ -84,17 +45,15 @@ agents-config (this repo)
 - **Schema-pinned config.** `opencode.json` declares
   `"$schema": "https://opencode.ai/config.json"` for editor IntelliSense and validation against the opencode config
   schema.
-- **opencode frontmatter vs Claude Code frontmatter.** opencode agent files use
-  `mode: subagent` (and optional `permission`). Claude Code agent files omit
-  `mode:`. `.agents/` mirrors keep the opencode frontmatter verbatim so any Agent-Skills-compatible client can use them.
-- **Skill discovery is union of paths.** `opencode.json` lists
-  `.agents/skills`, `.opencode/skill`, `.opencode/skills` (optional plural fallback), and `.claude/skills` so a
-  Claude-format skill is visible to opencode and vice-versa. This is why triple-mirroring skills is safe.
+- **Client-specific frontmatter.** OpenCode agent files use `mode: subagent` (and optional `permission`). Claude Code
+  agent files omit `mode:`. `.agents/` counterparts retain OpenCode frontmatter.
+- **Explicit skill discovery.** `opencode.json` lists `instructions/skills`; keep this path aligned with the actual
+  skill source directory when changing the layout.
 - **SDLC regulatory framework.** The `sdlc-*` subagents + `sdlc-regulatory` skill +
   `sdlc-gates` rule implement the AI-Driven SDLC. The skill is the source of truth for the methodology (it superseded
   the deleted `SOW.md`). The orchestrator is the single entry point via the `/sdlc` command.
 - **Harness engineering guidance.** The `harness-engineering` skill and always-on rule are
-  mirrored across `.opencode/`, `.claude/`, and `.agents/`. They describe context selection,
+  stored under `instructions/` for OpenCode and mirrored for other clients when needed. They describe context selection,
   host-enforced policy, bounded execution, independent verification, and privacy-aware
   observability. They are guidance only; consuming runtimes enforce permissions, approvals,
   isolation, and execution limits.
@@ -103,7 +62,7 @@ agents-config (this repo)
 
 - `AGENTS.md` — layout and linking model (any change breaks both tools).
 - `opencode.json` schema pin and `instructions` list (changes what's always-loaded).
-- The triple-mirror invariant for any component already published to consumers (deleting a mirror breaks that client).
+- The instruction-source layout and any maintained client counterparts; removing a counterpart can break that client.
 - The `sdlc-regulatory` skill's gate checklists and risk-autonomy table (these are the control surface; relaxing them is
   a high-risk change per the skill's own risk model).
 - **The `postinstall` script's contract (per [ADR 0002](docs/adr/0002-zero-edit-install.md))**:
@@ -145,5 +104,5 @@ agents-config (this repo)
 - `CONTRIBUTING.md` — how to add agents/skills/commands/rules.
 - `SECURITY.md` — security policy and the LLM security rule.
 - `docs/` — business logic, implementation status, architecture deep-dives, ADRs.
-- `.opencode/skill/sdlc-regulatory/SKILL.md` — AI-Driven SDLC methodology (source of truth for the SDLC controls).
-- `.opencode/skill/harness-engineering/SKILL.md` — shared agent reliability guidance; runtime enforcement remains the consuming host's responsibility.
+- `instructions/skills/sdlc-regulatory/SKILL.md` — AI-Driven SDLC methodology (source of truth for the SDLC controls).
+- `instructions/skills/harness-engineering/SKILL.md` — shared agent reliability guidance; runtime enforcement remains the consuming host's responsibility.

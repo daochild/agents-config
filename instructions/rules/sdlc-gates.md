@@ -1,6 +1,6 @@
 # SDLC Gates (always-on)
 
-> Loaded from `.claude/rules/sdlc-gates.md` (Claude Code) and `.agents/rules/sdlc-gates.md` (cross-client).
+> OpenCode-facing rule source: `instructions/rules/sdlc-gates.md`; register the applicable client paths in its configuration.
 > Methodology detail: load the `sdlc-regulatory` skill.
 
 ## Mandatory gate order

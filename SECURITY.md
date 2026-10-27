@@ -82,6 +82,6 @@ lists. This policy does not replace legal review.
 
 - `AGENTS.md` → "Security Guidelines"
 - `sdlc-regulatory` skill → Security Gate checklist + compliance crosswalk
-- `.opencode/skill/harness-engineering/SKILL.md` → harness design guidance and host/runtime boundary
+- `instructions/skills/harness-engineering/SKILL.md` → harness design guidance and host/runtime boundary
 - `CONTRIBUTING.md` → SDLC changes are high-risk
 - `.gitignore`, `.npmignore` — what is excluded from repo and package

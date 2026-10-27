@@ -25,7 +25,7 @@ configuration source** so that:
 | ID   | Requirement                                             | Status                                                                               |
 |------|---------------------------------------------------------|--------------------------------------------------------------------------------------|
 | BR-1 | Single source of truth for agent layout and conventions | Met by `AGENTS.md`                                                                   |
-| BR-2 | Works in both opencode and Claude Code from one config  | Met by triple-mirror model                                                           |
+| BR-2 | Works in both opencode and Claude Code from one config  | Met by shared instruction sources and client-specific counterparts                  |
 | BR-3 | Skills are loadable expertise, reusable across agents   | Met by `skills.paths` union in `opencode.json`                                       |
 | BR-4 | SDLC gates are always-on, not opt-in                    | Met by `sdlc-gates` rule in `opencode.json` instructions + `.claude/rules/`          |
 | BR-5 | AI never self-validates its own work                    | Met by separate `sdlc-reviewer` / `sdlc-security` / `sdlc-auditor` agents            |

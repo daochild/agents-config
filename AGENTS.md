@@ -1,14 +1,11 @@
 # agents-config
 
-A shared configuration repository for AI coding agents. Defines how
-`.claude/` (Claude Code) and `.opencode/` (opencode) are organized and how they reference each other.
+A shared configuration repository for AI coding agents.
 
 ## Primary instruction
 
-Primary instructions: `node_modules/@daochild/agents-config/AGENTS.md` — read in full and follow unless overridden below.
-
 Mandatory start-of-session checklist:
-1. Read `node_modules/@daochild/agents-config/AGENTS.md` completely.
+1. Read the root AGENTS.md completely.
 2. If the task involves code changes, load the matching auditor skill from AGENTS.md's Audit Rule before implementation.
 3. Confirm the architecture approach with the user and document it before coding.
 4. Do not begin implementation until steps 1–3 are satisfied.
@@ -42,7 +39,7 @@ output.
     - General architecture / system design → `senior-software-architect`
 2. **Run the audit via the matching `xxx-auditor` skill.** Surface findings, severity, and concrete remediation steps.
 3. **If the required skill does not exist locally, create it first:**
-    - Add `.opencode/skill/<xxx-auditor>/SKILL.md`
+    - Add `instructions/skills/<xxx-auditor>/SKILL.md`
     - Mirror to `.claude/skills/<xxx-auditor>/SKILL.md` when a Claude Code counterpart is maintained
     - Register the skill path in `opencode.json` if needed
     - Then execute the audit using the newly created skill.
@@ -59,11 +56,11 @@ for any feature/change that touches multiple modules or is medium/high risk.
 
 | Component             | Path (opencode)                                                                      | Claude mirror                                  | Agent Skills mirror                       |
 |-----------------------|--------------------------------------------------------------------------------------|------------------------------------------------|-------------------------------------------|
-| Methodology skill     | `.opencode/skill/sdlc-regulatory/SKILL.md`                                           | `.claude/skills/sdlc-regulatory/SKILL.md`      | `.agents/skills/sdlc-regulatory/SKILL.md` |
-| Always-on rule        | `.claude/rules/sdlc-gates.md` (also in `opencode.json` instructions)                 | same                                           | `.agents/rules/sdlc-gates.md`             |
-| Orchestrator subagent | `.opencode/agent/sdlc-orchestrator.md`                                               | `.claude/agents/sdlc-orchestrator.md`          | `.agents/agents/sdlc-orchestrator.md`     |
-| Role subagents (×9)   | `.opencode/agent/sdlc-{analyst,pm,architect,sm,dev,qa,security,reviewer,auditor}.md` | mirrored (Claude Code frontmatter, no `mode:`) | mirrored verbatim                         |
-| `/sdlc` slash command | `.opencode/command/sdlc.md`                                                          | `.claude/commands/sdlc.md`                     | `.agents/commands/sdlc.md`                |
+| Methodology skill     | `instructions/skills/sdlc-regulatory/SKILL.md`                                           | `.claude/skills/sdlc-regulatory/SKILL.md`      | `.agents/skills/sdlc-regulatory/SKILL.md` |
+| Always-on rule        | `instructions/rules/sdlc-gates.md` (register in `opencode.json`)                         | `.claude/rules/sdlc-gates.md`                 | `.agents/rules/sdlc-gates.md`             |
+| Orchestrator subagent | `instructions/agent/sdlc-orchestrator.md`                                               | `.claude/agents/sdlc-orchestrator.md`          | `.agents/agents/sdlc-orchestrator.md`     |
+| Role subagents (×9)   | `instructions/agent/sdlc-{analyst,pm,architect,sm,dev,qa,security,reviewer,auditor}.md` | mirrored (Claude Code frontmatter, no `mode:`) | mirrored verbatim                         |
+| `/sdlc` slash command | `instructions/command/sdlc.md`                                                          | `.claude/commands/sdlc.md`                     | `.agents/commands/sdlc.md`                |
 
 ### SDLC chain
 
@@ -99,76 +96,33 @@ agents-config/
 ├── opencode.json            # opencode project config (schema-pinned)
 ├── LICENSE
 ├── docs/                    # Project documentation
-├── research/                # Research and investigation materials
-├── resources/               # Project resources and assets
-├── .agents/                 # Cross-client agent config (agentskills.io compatible)
-│   ├── skills/              # Skill folders, each with SKILL.md
-│   ├── agents/              # Subagents
-│   ├── commands/            # Slash commands
-│   └── rules/               # Always-loaded rule files
-├── .claude/                 # Claude Code project config
-│   ├── CLAUDE.md            # Claude Code instructions (sources AGENTS.md)
-│   ├── CLAUDE.local.md      # Personal overrides (gitignored)
-│   ├── settings.json        # Permissions + config (committed)
-│   ├── settings.local.json  # Personal permissions (gitignored)
-│   ├── rules/               # Always-loaded rule files
-│   │   ├── code-style.md
-│   │   ├── testing.md
-│   │   └── api-conventions.md
-│   ├── agents/              # Subagents (Claude Code .md format)
-│   │   ├── code-reviewer.md
-│   │   └── security-auditor.md
-│   ├── commands/            # Slash commands
-│   │   ├── review.md
-│   │   ├── fix-issue.md
-│   │   └── deploy.md
-│   └── skills/              # Skill folders, each with SKILL.md
-│       ├── security-review/
-│       │   └── SKILL.md
-│       └── deploy/
-│           └── SKILL.md
-└── .opencode/               # opencode project config
-    ├── AGENTS.md            # opencode-scoped instructions (loaded via opencode.json)
-    ├── agent/               # Subagents (opencode .md format)
-    ├── skill/               # Skill folders, each with SKILL.md
-    ├── command/             # Slash commands
-    └── plugin/              # Local plugins (*.ts / *.js)
+├── instructions/            # OpenCode-facing agents, commands, rules, and skills
+│   ├── agent/
+│   ├── command/
+│   ├── rules/
+│   └── skills/
 ```
 
 ## Linking
 
-- `AGENTS.md` (root) is the single source of truth for layout and conventions. Both tools read it: Claude Code via
-  `.claude/CLAUDE.md`, opencode via
-  `opencode.json` → `instructions` → `AGENTS.md`.
-- `.opencode/AGENTS.md` is opencode-specific instructions (loaded by
-  `opencode.json`). It defers to the root `AGENTS.md` for shared structure and only adds opencode-only notes.
-- `.claude/CLAUDE.md` is Claude Code's instructions file. It sources the root `AGENTS.md` so both tools see the same
-  layout.
-- `.agents/` is the cross-client configuration directory compatible with the
-  [Agent Skills](https://agentskills.io/) convention. It is optional; existing
-  `.claude/` and `.opencode/` directories remain authoritative for their respective clients. The `.agents/` directory is
-  intended as a shared fallback so skills registered there are visible to any agent that scans the
-  `.agents/skills/` convention.
-- Skills live in `.opencode/skill/` (or `.opencode/skills/`), `.claude/skills/`, and `.agents/skills/`. `opencode.json`
-  declares all three paths under
-  `skills.paths` so opencode auto-discovers both Claude-format and Agent-Skills skills.
-- The example `docs` subagent exists in both `.opencode/agent/docs.md` and
-  `.claude/agents/docs.md`. Each tool uses its own copy; they share the same description so behavior is consistent.
+OpenCode-facing content is organized under `instructions/` and loaded through
+`opencode.json`. Keep configured paths aligned with the actual files; create
+client-specific counterparts only for clients the component must support.
 
 ## Adding a new component
 
 | Component      | opencode path                         | Claude Code path              | Agent Skills path             |
 |----------------|---------------------------------------|-------------------------------|-------------------------------|
-| Subagent       | `.opencode/agent/<n>.md`              | `.claude/agents/<n>.md`       | `.agents/agents/<n>.md`       |
-| Skill          | `.opencode/skill/<n>/SKILL.md`        | `.claude/skills/<n>/SKILL.md` | `.agents/skills/<n>/SKILL.md` |
-| Slash command  | `.opencode/command/<n>.md`            | `.claude/commands/<n>.md`     | `.agents/commands/<n>.md`     |
-| Plugin         | `.opencode/plugin/<n>.ts`             | n/a                           | n/a                           |
-| Always-on rule | add to `opencode.json` `instructions` | add to `.claude/rules/`       | add to `.agents/rules/`       |
+| Subagent       | `instructions/agent/<n>.md`           | `.claude/agents/<n>.md`       | `.agents/agents/<n>.md`       |
+| Skill          | `instructions/skills/<n>/SKILL.md`    | `.claude/skills/<n>/SKILL.md` | `.agents/skills/<n>/SKILL.md` |
+| Slash command  | `instructions/command/<n>.md`         | `.claude/commands/<n>.md`     | `.agents/commands/<n>.md`     |
+| Plugin         | `plugin/<n>.ts`             | n/a                           | n/a                           |
+| Always-on rule | `instructions/rules/<n>.md`, register in `opencode.json` | `.claude/rules/<n>.md` | `.agents/rules/<n>.md` |
 
 ## Harness engineering
 
-The always-on `harness-engineering` rule and triple-mirrored skill provide shared guidance
-for reliable agent workflows. Load the skill when designing or changing agent context,
+The `harness-engineering` rule and skill under `instructions/` provide guidance
+for reliable agent workflows. Maintain client-specific counterparts when needed. Load the skill when designing or changing agent context,
 tools, permissions, approvals, verification, or telemetry. The consuming agent host—not
 these configuration files—must enforce authorization, isolation, approvals, and runtime
 limits.
@@ -177,7 +131,7 @@ limits.
 
 To create an agent for code generation tasks:
 
-1. **Define the agent** in `.opencode/agent/code-generator.md`:
+1. **Define the agent** in `instructions/agent/code-generator.md`:
    ```markdown
    ---
    description: Generates code based on specifications and requirements
@@ -196,7 +150,7 @@ To create an agent for code generation tasks:
     - Language-specific guidelines
     - Testing requirements
 
-3. **Add skills** in `.opencode/skill/code-gen/SKILL.md`:
+3. **Add skills** in `instructions/skills/code-gen/SKILL.md`:
    ```markdown
    ---
    name: code-gen
@@ -208,7 +162,7 @@ To create an agent for code generation tasks:
    When generating code, follow these steps...
    ```
 
-4. **Set up commands** in `.opencode/command/generate.md`:
+4. **Set up commands** in `instructions/command/generate.md`:
    ```markdown
    ---
    description: Generate code from specifications

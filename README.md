@@ -7,7 +7,7 @@ The package is intended for production‑grade automation: version control, CI/C
 ## What's in the box
 
 - **Shared layout & conventions** — `AGENTS.md` is the single source of truth, inherited (not copied) by consuming projects.
-- **Triple-mirror model** — every subagent / skill / command / rule is mirrored across `.opencode/`, `.claude/`, and `.agents/` so it works in opencode, Claude Code, and any Agent-Skills-compatible client (see ADR 0001).
+- **Shared instruction sources** — OpenCode-facing agents, commands, rules, and skills are organized under `instructions/`; `opencode.json` declares the paths used by OpenCode. Keep configured paths aligned with the files and maintain Claude Code or Agent Skills counterparts when required; see `AGENTS.md` and `CONTRIBUTING.md`.
 - **AI-Driven SDLC framework** — `sdlc-regulatory` skill + 10 `sdlc-*` subagents + `sdlc-gates` rule + `/sdlc` command. Gates run in order (requirement → architecture → implementation → testing → security → review → deployment → DoD), AI never self-validates, high-risk changes require human approval, and a compliance crosswalk covers EU AI Act / NIST AI RMF / ISO 42001 / SOC 2 / GDPR.
 - **Domain skills** — `senior-qa`, `senior-solidity-auditor`, `senior-bitcoin-auditor`, `senior-frontend-dev`, `senior-software-developer`, `senior-ux-ui-designer`, `archivarius`, `data-engineer`, `find-skills`, `frontend-design`.
 - **Always-on rules** — `programming-best-practices` and `sdlc-gates`.
