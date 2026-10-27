@@ -42,6 +42,21 @@ point their `AGENTS.md` at
 
 ## Key decisions
 
+- **Dedicated harness flow (2026-10-27).** The user selected KISS: a thin
+  `harness-orchestrator` coordinates context, policy, execution, independent verification,
+  and feedback using the existing harness skill. A separate read-only `harness-verifier`
+  checks outcomes; neither role grants authority or replaces SDLC gates. The change is
+  medium risk with a 70% autonomy cap; human review and deployment remain pending.
+  Traceability id: `dedicated-harness-flow`.
+- **Client loading and dispatch.** Use the discoverable `opencode.json` filename
+  (formerly `opencode.jsonp`) and explicitly register commands stored under
+  `instructions/command/`. Other hosts must load role instructions into supported
+  subagents; OpenCode configuration does not register named Copilot agent types.
+  Missing dispatch capability is a host limitation, not a failed engineering gate.
+  `experimental.subagent_depth: 3` permits the finite harness -> SDLC -> role
+  chain; the default single level would block it. The harness coordinator denies
+  direct side effects and restricts delegation; the verifier is read-only.
+  The nesting setting requires a compatible OpenCode version and live validation.
 - **Schema-pinned config.** `opencode.json` declares
   `"$schema": "https://opencode.ai/config.json"` for editor IntelliSense and validation against the opencode config
   schema.

@@ -14,7 +14,7 @@ The SDLC regulatory framework was added in the current cycle and is the most rec
 | Component                       | Status | Location                                                                                                                                                                                                | Notes                                      |
 |---------------------------------|--------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------|
 | Root instructions (`AGENTS.md`) | Done   | `AGENTS.md`                                                                                                                                                                                             | Single source of truth                     |
-| opencode config                 | Path alignment needed | `opencode.json`                                                                                                                                                                               | Schema-pinned; audit agent prompts and always-on instructions against `instructions/` sources |
+| opencode config                 | Registered | `opencode.json`                                                                                                                                                                               | Renamed from `opencode.jsonp` for discovery; explicit agent and command sources |
 | Shared instruction sources      | Done   | `instructions/{agent,command,rules,skills}/`                                                                                                                                                            | OpenCode-facing source content             |
 | Client-specific counterparts    | Maintained as needed | `.claude/`, `.agents/`                                                                                                                                                                   | Keep formats and content aligned           |
 | Always-on rules                 | Done   | `instructions/rules/`, `opencode.json` instructions                                                                                                                                                     | `programming-best-practices`, `sdlc-gates`, `harness-engineering` |
@@ -30,7 +30,23 @@ The SDLC regulatory framework was added in the current cycle and is the most rec
 
 ## In progress
 
-- Nothing actively in progress.
+- `dedicated-harness-flow`: KISS architecture selected by the user on 2026-10-27.
+  Medium risk, 70% autonomy cap; configuration-only, no gate relaxation.
+  Explicitly permits three subagent levels for harness -> SDLC -> role dispatch
+  and restricts the harness coordinator and verifier permissions.
+  Adds a coordinator and separate read-only verifier, reuses
+  the harness skill and existing SDLC. Local checks and independent review are
+  required; human review, live OpenCode execution, and deployment remain pending.
+  The OpenCode executable is unavailable in this session. No runtime enforcement
+  is assumed. The prior blocked orchestrator mistook unavailable named Copilot
+  agent types for unavailable role instructions; use supported generic dispatch
+  with those instructions where the host permits it. The diagnostic runner's
+  intentional task denial is not a full-flow dispatch test.
+  Independent review found a high-severity nesting blocker and a medium-severity
+  missing coordinator permission boundary. Both were remediated with explicit
+  depth and permission configuration plus regression checks; live enforcement
+  remains unverified. The SDLC coordinator now explicitly describes host-compatible
+  role resolution without changing gate order, criteria, or approvals.
 
 ## Backlog
 

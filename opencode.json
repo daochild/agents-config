@@ -1,5 +1,8 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "experimental": {
+    "subagent_depth": 3
+  },
   "instructions": [
     "AGENTS.md",
     "instructions/rules/sdlc-gates.md",
@@ -10,7 +13,66 @@
       "instructions/skills"
     ]
   },
+  "command": {
+    "sdlc": {
+      "description": "Run the SDLC flow for a requirement or change",
+      "agent": "sdlc-orchestrator",
+      "subtask": true,
+      "template": "{file:./instructions/command/sdlc.md}\n\nRequirement: $ARGUMENTS"
+    },
+    "harness": {
+      "description": "Run a bounded harness flow with independent verification",
+      "agent": "harness-orchestrator",
+      "subtask": true,
+      "template": "{file:./instructions/command/harness.md}\n\nTask: $ARGUMENTS"
+    }
+  },
   "agent": {
+    "harness-orchestrator": {
+      "description": "Coordinates context, host policy checks, bounded execution, independent verification, and feedback without bypassing SDLC gates.",
+      "mode": "subagent",
+      "prompt": "{file:./instructions/agent/harness-orchestrator.md}",
+      "permission": {
+        "*": "deny",
+        "read": {
+          "*": "allow",
+          ".env": "deny",
+          ".env.*": "deny",
+          "**/.env": "deny",
+          "**/.env.*": "deny",
+          "**/secrets/**": "deny"
+        },
+        "glob": "allow",
+        "grep": "allow",
+        "skill": "allow",
+        "question": "allow",
+        "task": {
+          "*": "deny",
+          "general": "allow",
+          "sdlc-orchestrator": "allow",
+          "harness-verifier": "allow"
+        }
+      }
+    },
+    "harness-verifier": {
+      "description": "Read-only independent verifier of harness acceptance criteria and resulting artifacts; never executes or repairs the task.",
+      "mode": "subagent",
+      "prompt": "{file:./instructions/agent/harness-verifier.md}",
+      "permission": {
+        "*": "deny",
+        "read": {
+          "*": "allow",
+          ".env": "deny",
+          ".env.*": "deny",
+          "**/.env": "deny",
+          "**/.env.*": "deny",
+          "**/secrets/**": "deny"
+        },
+        "glob": "allow",
+        "grep": "allow",
+        "skill": "allow"
+      }
+    },
     "docs": {
       "description": "Answers questions about this agents-config repo layout and how instruction sources are registered for agent clients.",
       "mode": "subagent",

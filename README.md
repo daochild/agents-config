@@ -77,6 +77,40 @@ take effect — config is loaded once at startup and is not hot-reloaded.
 
 ## Read-only SDLC session diagnostic
 
+### Agent flows and loading
+
+OpenCode loads the root `opencode.json` (previously misnamed `opencode.jsonp`).
+Restart OpenCode after configuration changes. `/sdlc <requirement>` and
+`/harness <task>` are explicitly registered there because `instructions/command/`
+is not an automatically discovered command directory.
+The configuration sets `experimental.subagent_depth` to 3 for the bounded
+harness -> SDLC orchestrator -> role chain. The current schema defaults to one
+level, which prevents subagent orchestrators from dispatching their children.
+This setting is version-sensitive; use an OpenCode release supporting it.
+
+`/harness` runs context -> policy -> execution -> independent verification ->
+feedback. It uses the existing harness skill, delegates implementation through
+the SDLC when required, and uses a separate read-only `harness-verifier`.
+The consuming host must enforce permissions, approvals, isolation, and finite
+execution budgets; configuration prose alone cannot provide these controls.
+The harness coordinator denies direct execution and delegates only to `general`,
+`sdlc-orchestrator`, and `harness-verifier`; the verifier denies execution and
+delegation. These OpenCode permissions do not configure other agent hosts.
+
+**If SDLC is blocked:** distinguish host capability from gate failure.
+OpenCode agent registrations do not create named agent types in Copilot or
+other hosts. Where supported, dispatch a general-purpose subagent with the
+appropriate `instructions/agent/sdlc-<role>.md` instructions and keep developer,
+security reviewer, reviewer, and auditor in distinct contexts. If the host
+cannot dispatch independent agents, request human review instead of claiming
+a gate passed. Missing approvals remain pending; missing deployment evidence
+prevents production/DoD sign-off, not earlier authorized local work.
+
+`npm run sdlc:check` intentionally denies subagents and shell commands. It checks
+a read-only response, not the full SDLC flow; do not use it to prove role dispatch.
+
+### Running the diagnostic
+
 Run a small documentation-analysis task through OpenCode and check whether the
 response addresses the SDLC gates without changing the repository:
 

@@ -47,6 +47,14 @@ failed gate. You do NOT do the work yourself — you delegate, collect artifacts
 ## Rules
 
 - Load the `sdlc-regulatory` skill before doing anything.
+- Resolve each role through the current host's dispatch capabilities before
+  starting the chain. OpenCode registrations do not create named agent types
+  in other clients. If named roles are unavailable but general-purpose
+  subagents are supported, read the corresponding `instructions/agent/<role>.md`
+  and pass those role instructions, the slug, and prior artifacts to a fresh
+  subagent. Preserve all gates, role separation, permissions, and human approvals.
+  If neither dispatch mechanism is available, report a host-capability blocker;
+  do not label an unperformed gate as failed or silently do every role yourself.
 - Never let the same agent that produced an artifact also validate the next gate for that artifact.
 - Never advance past a gate that has unchecked items.
 - Never approve a high-risk change yourself — that is a human decision. You only request and record it.

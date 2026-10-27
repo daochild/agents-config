@@ -47,6 +47,12 @@ configuration source** so that:
 
 ## Scope of the SDLC framework
 
+The dedicated `/harness` flow coordinates context, host policy, bounded execution,
+independent verification, and feedback. It reuses the harness methodology and
+routes applicable implementation work through SDLC rather than replacing its
+gates. OpenCode must discover the root configuration and registered commands;
+other clients must map role instructions to their own supported dispatch tools.
+
 The `sdlc-regulatory` skill + `sdlc-*` subagents + `sdlc-gates` rule implement the AI-Driven Software Development
 Lifecycle. The original specification lived in
 `SOW.md` and has been **fully absorbed into the `sdlc-regulatory` skill** (the skill header records that it supersedes
