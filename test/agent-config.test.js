@@ -28,6 +28,27 @@ test('discoverable config resolves every agent, instruction, and skill path', ()
   }
 });
 
+test('first-party skills expose SKILL.md with frontmatter name matching the directory', () => {
+  for (const directory of config.skills.paths) {
+    const skillsRoot = path.join(root, directory);
+    for (const entry of fs.readdirSync(skillsRoot, { withFileTypes: true })) {
+      if (!entry.isDirectory()) {
+        continue;
+      }
+      const skillFile = path.join(skillsRoot, entry.name, 'SKILL.md');
+      assert.ok(fs.statSync(skillFile).isFile(), `${skillFile} must exist`);
+      const content = fs.readFileSync(skillFile, 'utf8');
+      assert.match(content, /^---\r?\nname: /m, `${entry.name}: missing frontmatter`);
+      assert.match(
+        content,
+        new RegExp(`^name: ${entry.name.replace(/-/g, '\\-')}\\s*$`, 'm'),
+        `${entry.name}: frontmatter name must match directory`,
+      );
+      assert.match(content, /^description: .+/m, `${entry.name}: missing description`);
+    }
+  }
+});
+
 test('both flows register a command, argument template, and existing agent', () => {
   for (const [command, agent] of [
     ['sdlc', 'sdlc-orchestrator'],
