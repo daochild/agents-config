@@ -6,7 +6,8 @@
   "instructions": [
     "AGENTS.md",
     "instructions/rules/sdlc-gates.md",
-    "instructions/rules/harness-engineering.md"
+    "instructions/rules/harness-engineering.md",
+    "instructions/rules/nvidia-skillspector-check.md"
   ],
   "skills": {
     "paths": [
