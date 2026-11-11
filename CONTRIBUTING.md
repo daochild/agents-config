@@ -29,6 +29,21 @@ client.
 | Plugin         | `plugin/<n>.ts`                       | n/a                                  | n/a                           |
 | Always-on rule | `instructions/rules/<n>.md`           | `.claude/rules/<n>.md`               | `.agents/rules/<n>.md`        |
 
+### Adding a skill to this repository
+
+Installing a skill with `npx skills` on a developer machine is separate from **landing** a skill in `agents-config`.
+Before you add or update `instructions/skills/<n>/SKILL.md` (and any `.claude/` / `.agents/` mirrors), comply with
+`instructions/rules/nvidia-skillspector-check.md`:
+
+1. Run NVIDIA Skillspector on the skill source and fix compliance, security, or compatibility findings.
+2. Pass the SDLC Implementation Gate when the change is medium/high risk or spans multiple components (`/sdlc`).
+3. Add the skill under `instructions/skills/<n>/SKILL.md` — no `opencode.json` entry needed beyond `skills.paths`.
+4. Put Skillspector reports or approval artifacts in the PR description.
+5. Update `skills-lock.json` when the skill is externally sourced and not on `skills.paths`.
+
+Use the `find-skills` skill to discover candidates from the open ecosystem; always complete Skillspector before merging
+into this repo.
+
 ### Format differences
 
 - **opencode subagent frontmatter** uses `mode: subagent` (and optional `permission`).

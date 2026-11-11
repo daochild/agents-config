@@ -102,7 +102,7 @@ agents-config/
 ├── instructions/                    # OpenCode-facing sources — the real component tree
 │   ├── agent/                       # subagent prompts (sdlc-*, harness-*, docs)
 │   ├── command/                     # slash-command templates (sdlc, harness)
-│   ├── rules/                       # always-on rules (sdlc-gates, harness-engineering)
+│   ├── rules/                       # always-on rules (sdlc-gates, harness-engineering, nvidia-skillspector-check)
 │   └── skills/                      # first-party skills (auto-discovered)
 ├── .agents/skills/security-audit/   # external skill (ADR 0003), not in skills.paths
 ├── scripts/                         # postinstall.js, sdlc-session-check.js
@@ -113,9 +113,10 @@ agents-config/
 
 ## Linking
 
-- OpenCode loads `opencode.json` → `instructions`: `AGENTS.md` plus the two always-on rules
-  (`instructions/rules/sdlc-gates.md`, `instructions/rules/harness-engineering.md`). Skills are discovered only from
-  `skills.paths` → `instructions/skills`.
+- OpenCode loads `opencode.json` → `instructions`: `AGENTS.md` plus three always-on rules
+  (`instructions/rules/sdlc-gates.md`, `instructions/rules/harness-engineering.md`,
+  `instructions/rules/nvidia-skillspector-check.md`). Skills are discovered only from `skills.paths` →
+  `instructions/skills`.
 - Every `agent.*.prompt`, `command.*.template`, and `instructions` entry is a real path that `npm test` verifies —
   if you move or rename a file under `instructions/`, update `opencode.json` in the same change.
 - Claude Code reads root `CLAUDE.md` (`@AGENTS.md`); Copilot reads `.github/copilot-instructions.md`.
@@ -146,6 +147,11 @@ Add OpenCode-facing components under `instructions/` and register them in `openc
 | Plugin         | `plugin/<n>.ts`                     | `plugin` array (no plugins exist yet)          |
 
 `.claude/` and `.agents/` counterparts are optional and currently absent; create them only for clients in scope.
+
+When adding a skill under `instructions/skills/`, follow `instructions/rules/nvidia-skillspector-check.md`: run NVIDIA
+Skillspector on the skill, resolve reported issues, and attach approval artifacts to the PR. The rule is always-on for
+OpenCode; it does not apply to end-user installs via `npx skills` outside this repository. Record external skills in
+`skills-lock.json` when they are not on `skills.paths` (see `.agents/skills/security-audit/`).
 
 ## Harness engineering
 

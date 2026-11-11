@@ -28,8 +28,9 @@ Before installing any new skill in this repository, the skill MUST be checked ag
 - Obtain Skillspector approval before proceeding
 
 ### Phase 3: Installation
-- Register the skill in `opencode.json` (via `skills-lock.json` if needed)
-- Add necessary files to `instructions/skills/`
+- Add `instructions/skills/<n>/SKILL.md` (auto-discovered via `skills.paths`; no per-skill `opencode.json` entry)
+- Record externally sourced skills in `skills-lock.json` when they are not on `skills.paths`
+- Use the `find-skills` skill to discover candidates; complete Skillspector before merging into this repo
 - Update README or documentation as required
 
 ## Error handling
@@ -51,3 +52,4 @@ Skillspector validation results must be:
 This rule works in conjunction with:
 - `sdlc-gates.md` - The Implementation Gate must be passed before skill installation
 - `harness-engineering.md` - Must follow least-privilege principles and security validation
+- `find-skills` skill (`instructions/skills/find-skills/SKILL.md`) - Discovery and install flow; repo land requires Skillspector (Step 4b)

@@ -4,6 +4,7 @@
 
 - Read `AGENTS.md` before making changes. It is the repository's primary instruction source; use `ARCHITECTURE.md`, `CONTRIBUTING.md`, and `SECURITY.md` for the relevant architectural, contribution, and security details.
 - This is the npm package `@daochild/agents-config`, not an application. OpenCode-facing agent, command, rule, and skill sources live under `instructions/`; `opencode.json` declares the paths used by OpenCode. Client-specific counterparts may be maintained under `.claude/` and `.agents/`.
+- Landing a new skill under `instructions/skills/` requires NVIDIA Skillspector per `instructions/rules/nvidia-skillspector-check.md` and `CONTRIBUTING.md`; local-only `npx skills` installs outside this repo do not.
 - Before changing an agent component, inspect the actual file paths and matching `opencode.json` entry. Some agent prompts and always-on instruction entries may still use legacy client-specific paths; align them with the source under `instructions/` when modifying those registrations. Follow `CONTRIBUTING.md` for counterpart formats and checks.
 - Treat the SDLC gate order and risk/autonomy rules as controls, not optional workflow suggestions. Classify risk before implementation; use the orchestrator for multi-component or medium/high-risk work. The author of a change must not be its sole reviewer, and high-risk approval decisions belong to a human.
 - Configuration and prompt text do not enforce authorization or isolate tools. Runtime hosts must enforce permissions and approvals at side-effect boundaries.

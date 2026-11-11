@@ -71,6 +71,18 @@ For example:
 2. **Source reputation** — Official sources (`vercel-labs`, `anthropics`, `microsoft`) are more trustworthy than unknown authors.
 3. **GitHub stars** — Check the source repository. A skill from a repo with <100 stars should be treated with skepticism.
 
+### Step 4b: agents-config repository installs
+
+When the user wants to **add a skill to the `agents-config` repo** (`instructions/skills/`), not only install it
+locally with `npx skills`, follow `instructions/rules/nvidia-skillspector-check.md`:
+
+1. Run **NVIDIA Skillspector** on the skill and address failures before opening a PR.
+2. Add `instructions/skills/<n>/SKILL.md` (and `.claude/` / `.agents/` mirrors when those clients are in scope).
+3. Include Skillspector approval artifacts in the PR; update `skills-lock.json` for external skills off `skills.paths`.
+
+Global `npx skills add` for a single developer does **not** require Skillspector unless they are contributing the
+skill into `agents-config`.
+
 ### Step 5: Present Options to the User
 
 When you find relevant skills, present them to the user with:
@@ -95,13 +107,16 @@ Learn more: https://skills.sh/vercel-labs/agent-skills/react-best-practices
 
 ### Step 6: Offer to Install
 
-If the user wants to proceed, you can install the skill for them:
+If the user wants a **local/global** install, you can install the skill for them:
 
 ```bash
 npx skills add <owner/repo@skill> -g -y
 ```
 
 The `-g` flag installs globally (user-level) and `-y` skips confirmation prompts.
+
+If they want the skill **in agents-config**, use Step 4b (Skillspector + `instructions/skills/`) instead of only
+running `npx skills add`.
 
 ## Common Skill Categories
 
