@@ -76,6 +76,7 @@ limitations.
 
 | Date       | Change                                                                                                                                                                                                                       | Author     |
 |------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| 2026-11-12 | Bumped version to 2.2.0 (minor): NVIDIA Skillspector always-on rule and doc alignment; new `grill-me` skill; policy and skill-layout tests.                                                                                  | maintainer |
 | 2026-10-26 | Researched harness engineering sources, assessed the supplied six-component model, and documented a configuration-only implementation proposal. No runtime or agent configuration behavior changed; architecture approval is pending. | maintainer |
 | 2026-08-18 | Bumped version to 1.1.0 (minor) for the SDLC feature release; updated `package.json` description and keywords to reflect the SDLC/governance scope.                                                                          | maintainer |
 | 2026-08-18 | Simplified `README.md` install section: collapsed "After installation" into "Installation"; replaced 3-line `AGENTS.md` block with a single pointer line. No contract change (no postinstall/bin; respects the "no runtime code" invariant). | maintainer |

@@ -1,10 +1,11 @@
 {
   "name": "@daochild/agents-config",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Shared, version-controlled configuration for AI coding agents: layout, skills, subagents, commands, rules, and an always-on AI-driven SDLC governance framework.",
   "keywords": [
     "ai-agents",
     "agent-configuration",
+    "skills",
     "agent-skills",
     "coding-assistant",
     "developer-tools",
@@ -16,7 +17,9 @@
     "compliance",
     "workflow",
     "opencode",
-    "claude-code"
+    "claude-code",
+    "harness",
+    "skillspector"
   ],
   "homepage": "https://github.com/daochild/agents-config#readme",
   "bugs": {
