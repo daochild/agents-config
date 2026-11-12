@@ -56,7 +56,7 @@ The SDLC regulatory framework was added in the current cycle and is the most rec
 | BL-1 | Add a real `index.js` entry if plugins need a host hook      | low      | Partially resolved (postinstall only); a full plugin host hook remains a separate concern. `package.json` `main: "index.js"` is unchanged — the postinstall script (`scripts/postinstall.js`) is a constrained install-time helper per ADR 0002, not the package's main entry. Reconciling `main` with a real `index.js` host hook is still open. |
 | BL-2 | Seed `docs/api/` if the plugin interface becomes public      | low      | Config-only repo has no public API today            |
 | BL-3 | Seed `docs/database/` if any stateful metadata is introduced | low      | Config-only repo has no database                    |
-| BL-4 | Add CI workflow to verify maintained client counterparts on PR | medium | See `CONTRIBUTING.md` consistency checks           |
+| BL-4 | Add CI workflow to verify maintained client counterparts on PR | medium | Done — `.github/workflows/ci.yml`, `test/mirror-consistency.test.js` |
 | BL-5 | Record an ADR for shared instruction sources                 | low      | Architecture decision documentation                 |
 | BL-6 | Operationalize harness engineering principles in shared config | medium | Implemented as shared skill and rule; runtime enforcement remains the consumer host's responsibility. |
 
