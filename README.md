@@ -27,9 +27,69 @@ pnpm add --save-dev @daochild/agents-config
 bun add --dev @daochild/agents-config
 ```
 
-### Automatic path (zero-edit)
+### OpenCode consumer setup (recommended)
 
-After `npm install`, this package's `postinstall` script automatically writes a
+In the consuming project, install this package as a direct dev dependency, then run
+from that project's root:
+
+```bash
+node node_modules/@daochild/agents-config/scripts/setup-opencode.js
+```
+
+The explicit, offline setup creates `opencode.json` if missing, or merges these
+entries into an existing strict-JSON config without removing other settings:
+
+```json
+{
+  "instructions": [
+    "node_modules/@daochild/agents-config/instructions/rules/prompt-sanity-guard.md"
+  ],
+  "skills": {
+    "paths": ["node_modules/@daochild/agents-config/instructions/skills"]
+  }
+}
+```
+
+Sources are inherited, not copied. The skills path enables discovery of the
+package's skills, including `prompt-sanity`; it does not eagerly load every skill.
+Repeated setup runs make no changes once these entries exist. Invalid field
+types, symlinks, and existing `opencode.jsonc` files are rejected with a nonzero
+exit status. For JSONC, add the entries above manually to the existing config;
+setup never creates a competing JSON config or discards comments.
+
+To run it after future installs, add this script to **your project's**
+`package.json` (preserve an existing `postinstall`, chaining with `&&`):
+
+```json
+{
+  "scripts": {
+    "postinstall": "node node_modules/@daochild/agents-config/scripts/setup-opencode.js"
+  }
+}
+```
+
+Run this lifecycle only where dev dependencies are installed. This explicit
+setup fails visibly on errors; the legacy package install helper below retains
+its exit-0 contract. Package dependency lifecycle scripts normally run in the
+installed package directory, not the consumer root, so that helper alone cannot
+reliably configure a consumer. pnpm and other package managers may also block
+install scripts; run the explicit command when scripts are disabled.
+
+**Restart OpenCode** after setup. Registering a rule and skill provides agent
+guidance, **not an enforced per-prompt runtime filter**. A separate host/runtime
+integration would be required to guarantee screening.
+
+The inherited examples using `npm run prompt-sanity:check` apply to this package's
+own checkout; setup does not add that npm script to your project. In a consumer,
+use the packaged CLI, which resolves its own dependency even with pnpm isolation:
+
+```bash
+node node_modules/@daochild/agents-config/scripts/prompt-sanity-check.mjs --stdin --json < prompt.txt
+```
+
+### Legacy AGENTS.md pointer helper
+
+When run from a qualifying consumer root, this package's `postinstall` helper writes a
 single pointer line into your project's `AGENTS.md` (if one exists), idempotently
 and non-destructively. The script is deterministic (no network, no telemetry),
 scoped to your project root (`cwd`), never overwrites existing content, and

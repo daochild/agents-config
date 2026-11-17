@@ -34,11 +34,15 @@ point their `AGENTS.md` at
    restart opencode. No hot reload.
 6. **No runtime *application* code.** This repo's "code" is configuration. The only JS is the
    opencode plugin host (`@opencode-ai/plugin` dependency), any
-   `plugin/*.ts|.js` the user adds, **and one constrained install-time file-pointer
-   helper (`scripts/postinstall.js`) permitted by [ADR 0002](docs/adr/0002-zero-edit-install.md)**.
-   There is no `src/`, no build output, no deployable service, no long-running process. (Rule 6
-   narrowed by ADR 0002 from "No runtime code" to "No runtime *application* code"; a single
-   bounded install-time helper is permitted.)
+   `plugin/*.ts|.js` the user adds, the constrained install-time file-pointer
+   helper (`scripts/postinstall.js`) permitted by [ADR 0002](docs/adr/0002-zero-edit-install.md),
+   and, once implemented, the approved explicit consumer-root OpenCode setup CLI
+   (`scripts/setup-opencode.js`) specified by [ADR 0004](docs/adr/0004-opencode-consumer-setup.md).
+   The planned setup CLI is manually invoked and only merges inherited source paths into a
+   consumer's regular strict-JSON `opencode.json`; it is not lifecycle automation or a runtime filter.
+   There is no `src/`, no build output, no deployable service, and no long-running process.
+   (Rule 6 was narrowed by ADR 0002 from "No runtime code" to "No runtime *application* code";
+   ADR 0004 adds a separate, bounded, explicitly invoked config setup CLI.)
 
 ## Key decisions
 
@@ -75,6 +79,13 @@ point their `AGENTS.md` at
 - **Prompt Sanity guard.** Dependency `@daochild/prompt-sanity@0.1.1`, always-on rule `prompt-sanity-guard`,
   skill `prompt-sanity`, and CLI `npm run prompt-sanity:check` screen untrusted prompts for injection before
   agents follow them. Offline `quickCheck` is the default; API client is optional via env.
+- **Explicit OpenCode consumer setup (2026-11-17).** The user approved a KISS,
+  standalone Node built-ins-only CLI at `scripts/setup-opencode.js`, invoked from a consumer root to
+  merge the inherited Prompt Sanity rule and skill paths into a regular strict-JSON `opencode.json`.
+  It does not parse or shadow JSONC, follow symlinks, copy sources, add runtime filtering, change package
+  lifecycle behavior, or alter the existing `scripts/postinstall.js` contract. See
+  [ADR 0004](docs/adr/0004-opencode-consumer-setup.md) and
+  `docs/architecture/opencode-consumer-setup.md`. Implementation and subsequent gates remain pending.
 - **Harness engineering guidance.** The `harness-engineering` skill and always-on rule are
   stored under `instructions/` for OpenCode and mirrored for other clients when needed. They describe context selection,
   host-enforced policy, bounded execution, independent verification, and privacy-aware
@@ -95,6 +106,11 @@ point their `AGENTS.md` at
   suppression; `peerDependencies`/`optionalDependencies` do NOT count as direct), and pointer-line
   content (the em dash `—` U+2014 and the exact wording — see ADR 0002). Relaxing any clause is a
   high-risk change requiring human approval at the Architecture, Security, and Code Review gates.
+- **The explicit OpenCode setup CLI's contract (per [ADR 0004](docs/adr/0004-opencode-consumer-setup.md))**:
+  consumer-root-only, explicit invocation, direct-dependency-only, strict-JSON-only, preserve unknown
+  fields, idempotent unique path registration, reject JSONC conflicts and symlinks/non-regular files,
+  actionable nonzero failures, and no dependency or lifecycle changes. Do not merge this behavior into
+  `scripts/postinstall.js`.
 
 ## Constraints
 
@@ -114,8 +130,8 @@ point their `AGENTS.md` at
 | Concern              | Choice                                                          |
 |----------------------|-----------------------------------------------------------------|
 | Package manager      | npm / yarn / pnpm / bun (consumer's choice)                     |
-| Runtime              | Node.js (plugin host only; + one install-time helper, ADR 0002) |
-| Install-time helper  | `scripts/postinstall.js` (CommonJS; Node built-ins only)        |
+| Runtime              | Node.js (plugin host + existing constrained helper; planned explicit setup CLI) |
+| Install/setup helpers| `scripts/postinstall.js` (existing constrained lifecycle helper); planned `scripts/setup-opencode.js` (explicit consumer CLI; Node built-ins only) |
 | Config format        | JSON (`opencode.json`), Markdown (agents/skills/rules/commands) |
 | Schema               | `https://opencode.ai/config.json`                               |
 | Plugin SDK           | `@opencode-ai/plugin`                                           |

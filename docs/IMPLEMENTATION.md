@@ -32,6 +32,14 @@ The SDLC regulatory framework was added in the current cycle and is the most rec
 
 ## In progress
 
+- `opencode-consumer-setup`: approved KISS consumer-root CLI implemented in
+  `scripts/setup-opencode.js`; inherits the rule and packaged skills without
+  modifying the constrained install helper. Consumer merge/error/symlink tests
+  and independent source review completed; the QA diagnostic finding is fixed.
+  Release remains blocked on security evidence/baseline dependency advisory,
+  human review, and deployment validation. See
+  `reviews/opencode-consumer-setup-dod.md` and README consumer setup.
+
 - `dedicated-harness-flow`: KISS architecture selected by the user on 2026-10-27.
   Medium risk, 70% autonomy cap; configuration-only, no gate relaxation.
   Explicitly permits three subagent levels for harness -> SDLC -> role dispatch

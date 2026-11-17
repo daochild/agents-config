@@ -34,8 +34,16 @@ configuration source** so that:
 | BR-8 | Config is portable across Node ecosystems               | Met by npm packaging; consumer picks package manager                                 |
 | BR-9 | Repo is itself AI-readable (dogfoods its own contract)  | Met by `AGENTS.md` + `ARCHITECTURE.md` + `SECURITY.md` + `CONTRIBUTING.md` + `docs/` |
 
-## Non-goals
+## Consumer setup
 
+Consumer OpenCode registration is an explicit, idempotent project-root setup
+  (`scripts/setup-opencode.js`, ADR 0004), optionally invoked by the consumer's
+  own `postinstall`. It inherits Prompt Sanity guidance and skill discovery,
+  preserves existing JSON settings, and fails safely for unsupported configs.
+  It does not guarantee per-prompt runtime screening or alter package lifecycle
+  behavior; those are outside this feature.
+
+## Non-goals
 - This repo does not ship runtime *application* code. A constrained install-time file-pointer
   helper (`scripts/postinstall.js`, per [ADR 0002](adr/0002-zero-edit-install.md)) is
   permitted; it is not application code (no business logic, no service, no long-running process).
