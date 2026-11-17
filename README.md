@@ -11,7 +11,8 @@ The package is intended for production‑grade automation: version control, CI/C
 - **AI-Driven SDLC framework** — `sdlc-regulatory` skill + 10 `sdlc-*` subagents + `sdlc-gates` rule + `/sdlc` command. Gates run in order (requirement → architecture → implementation → testing → security → review → deployment → DoD), AI never self-validates, high-risk changes require human approval, and a compliance crosswalk covers EU AI Act / NIST AI RMF / ISO 42001 / SOC 2 / GDPR.
 - **Domain skills** — `senior-qa`, `senior-solidity-auditor`, `senior-bitcoin-auditor`, `senior-frontend-dev`, `senior-software-developer`, `senior-ux-ui-designer`, `archivarius`, `data-engineer`, `find-skills`, `frontend-design`, `grill-me`.
 - **Externally sourced skill** — `security-audit` is maintained at `.agents/skills/security-audit/` and sourced from `cloudflare/security-audit-skill`. Its source and computed hash are recorded in `skills-lock.json`. It follows the Agent Skills layout and is separate from OpenCode's `instructions/skills` discovery path.
-- **Always-on rules** — `programming-best-practices` and `sdlc-gates`.
+- **Always-on rules** — `sdlc-gates`, `spec-based-docs`, `prompt-sanity-guard`, `harness-engineering`, `nvidia-skillspector-check`.
+- **Prompt Sanity guard** — `@daochild/prompt-sanity@0.1.1` + `prompt-sanity` skill + `npm run prompt-sanity:check` for offline prompt-injection screening.
 - **AI-readable contract** — `ARCHITECTURE.md`, `CONTRIBUTING.md`, `SECURITY.md`, `docs/` (business logic, implementation status, ADRs).
 
 ## Installation

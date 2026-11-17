@@ -7,6 +7,7 @@
     "AGENTS.md",
     "instructions/rules/sdlc-gates.md",
     "instructions/rules/spec-based-docs.md",
+    "instructions/rules/prompt-sanity-guard.md",
     "instructions/rules/harness-engineering.md",
     "instructions/rules/nvidia-skillspector-check.md"
   ],

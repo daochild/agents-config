@@ -11,7 +11,7 @@ Any AI-generated change MUST pass these gates in order before it reaches product
 2. **Architecture** — existing arch analyzed, impacted modules, dependencies, ADR if needed
 3. **Implementation** — project patterns followed, no unnecessary deps, in scope, AI assumptions documented
 4. **Testing** — unit, integration, regression, edge cases, existing suite passes
-5. **Security** — SAST, dependency scan, secrets scan, security AI review, authN/Z where applicable
+5. **Security** — SAST, dependency scan, secrets scan, Prompt Sanity (`@daochild/prompt-sanity`) when untrusted prompt/text is in scope, security AI review, authN/Z where applicable
 6. **Code Review** — AI review + human engineering review (+ senior/security review for high-risk)
 7. **Deployment** — CI passes, staging validation, smoke tests, canary where applicable, prod monitoring
 8. **Definition of Done** — every DoD checklist item verified; no unresolved AI assumptions

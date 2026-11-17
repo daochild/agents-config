@@ -1,6 +1,6 @@
 {
   "name": "@daochild/agents-config",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Shared, version-controlled configuration for AI coding agents: layout, skills, subagents, commands, rules, and an always-on AI-driven SDLC governance framework.",
   "keywords": [
     "ai-agents",
@@ -36,9 +36,11 @@
   "scripts": {
     "test": "node --test",
     "sdlc:check": "node scripts/sdlc-session-check.js",
+    "prompt-sanity:check": "node scripts/prompt-sanity-check.mjs",
     "postinstall": "node scripts/postinstall.js"
   },
   "dependencies": {
+    "@daochild/prompt-sanity": "0.1.1",
     "@opencode-ai/plugin": "^1.18.18"
   },
   "overrides": {

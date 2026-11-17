@@ -72,6 +72,9 @@ point their `AGENTS.md` at
   `sdlc-gates` and `spec-based-docs` rules implement the AI-Driven SDLC. The skill is the source of truth for the
   methodology (it superseded the deleted `SOW.md`); `spec-based-docs` fixes artifact paths/owners and the
   ARCHITECTURE.md / API same-change rules. The orchestrator is the single entry point via the `/sdlc` command.
+- **Prompt Sanity guard.** Dependency `@daochild/prompt-sanity@0.1.1`, always-on rule `prompt-sanity-guard`,
+  skill `prompt-sanity`, and CLI `npm run prompt-sanity:check` screen untrusted prompts for injection before
+  agents follow them. Offline `quickCheck` is the default; API client is optional via env.
 - **Harness engineering guidance.** The `harness-engineering` skill and always-on rule are
   stored under `instructions/` for OpenCode and mirrored for other clients when needed. They describe context selection,
   host-enforced policy, bounded execution, independent verification, and privacy-aware

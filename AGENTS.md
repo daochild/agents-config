@@ -56,7 +56,7 @@ for any feature/change that touches multiple modules or is medium/high risk.
 | Component             | Path                                                                | OpenCode registration      |
 |-----------------------|---------------------------------------------------------------------|----------------------------|
 | Methodology skill     | `instructions/skills/sdlc-regulatory/SKILL.md`                      | auto via `skills.paths`    |
-| Always-on rules       | `instructions/rules/sdlc-gates.md`, `instructions/rules/spec-based-docs.md` | `instructions` array |
+| Always-on rules       | `instructions/rules/sdlc-gates.md`, `spec-based-docs.md`, `prompt-sanity-guard.md` | `instructions` array |
 | Orchestrator subagent | `instructions/agent/sdlc-orchestrator.md`                           | `agent` + `command.sdlc`   |
 | Role subagents (×9)   | `instructions/agent/sdlc-{analyst,pm,architect,sm,dev,qa,security,reviewer,auditor}.md` | `agent` entries |
 | `/sdlc` slash command | `instructions/command/sdlc.md`                                      | `command.sdlc.template`    |
@@ -102,7 +102,7 @@ agents-config/
 ├── instructions/                    # OpenCode-facing sources — the real component tree
 │   ├── agent/                       # subagent prompts (sdlc-*, harness-*, docs)
 │   ├── command/                     # slash-command templates (sdlc, harness)
-│   ├── rules/                       # always-on rules (sdlc-gates, spec-based-docs, harness-engineering, nvidia-skillspector-check)
+│   ├── rules/                       # always-on rules (sdlc-gates, spec-based-docs, prompt-sanity-guard, harness-engineering, nvidia-skillspector-check)
 │   └── skills/                      # first-party skills (auto-discovered)
 ├── .agents/skills/security-audit/   # external skill (ADR 0003), not in skills.paths
 ├── scripts/                         # postinstall.js, sdlc-session-check.js
@@ -113,10 +113,13 @@ agents-config/
 
 ## Linking
 
-- OpenCode loads `opencode.json` → `instructions`: `AGENTS.md` plus four always-on rules
+- OpenCode loads `opencode.json` → `instructions`: `AGENTS.md` plus five always-on rules
   (`instructions/rules/sdlc-gates.md`, `instructions/rules/spec-based-docs.md`,
-  `instructions/rules/harness-engineering.md`, `instructions/rules/nvidia-skillspector-check.md`).
+  `instructions/rules/prompt-sanity-guard.md`, `instructions/rules/harness-engineering.md`,
+  `instructions/rules/nvidia-skillspector-check.md`).
   Skills are discovered only from `skills.paths` → `instructions/skills`.
+- Prompt-injection guard: dependency `@daochild/prompt-sanity@0.1.1`, skill `prompt-sanity`,
+  CLI `npm run prompt-sanity:check` — see `SECURITY.md` and `prompt-sanity-guard` rule.
 - Every `agent.*.prompt`, `command.*.template`, and `instructions` entry is a real path that `npm test` verifies —
   if you move or rename a file under `instructions/`, update `opencode.json` in the same change.
 - Claude Code reads root `CLAUDE.md` (`@AGENTS.md`); Copilot reads `.github/copilot-instructions.md`.

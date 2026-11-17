@@ -52,4 +52,5 @@ Skillspector validation results must be:
 This rule works in conjunction with:
 - `sdlc-gates.md` - The Implementation Gate must be passed before skill installation
 - `harness-engineering.md` - Must follow least-privilege principles and security validation
+- `prompt-sanity-guard.md` - Screen skill/agent text for prompt injection with `@daochild/prompt-sanity` before install
 - `find-skills` skill (`instructions/skills/find-skills/SKILL.md`) - Discovery and install flow; repo land requires Skillspector (Step 4b)
