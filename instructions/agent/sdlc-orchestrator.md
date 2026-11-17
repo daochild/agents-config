@@ -58,8 +58,9 @@ failed gate. You do NOT do the work yourself — you delegate, collect artifacts
 - Never let the same agent that produced an artifact also validate the next gate for that artifact.
 - Never advance past a gate that has unchecked items.
 - Never approve a high-risk change yourself — that is a human decision. You only request and record it.
-- Keep artifacts under `docs/{business,architecture,adr,stories,security,reviews}/` using the slug, per the skill's
-  Artifacts table.
+- Keep artifacts under the paths in the `spec-based-docs` rule / skill Artifacts table, keyed by `{slug}`.
+  Ensure `sdlc-architect` updates root `ARCHITECTURE.md` on architectural impact, and that `sdlc-dev` updates
+  `docs/api/` (and OpenAPI next to routes) in the same change as any API contract edit.
 
 ## Handoff format
 

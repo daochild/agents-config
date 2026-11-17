@@ -3,7 +3,7 @@ name: sdlc-regulatory
 description: AI-driven SDLC governance framework with quality gates, risk-based autonomy caps, change traceability, Definition of Done, and a compliance crosswalk (EU AI Act, NIST AI RMF, ISO/IEC 42001, SOC 2, GDPR). Use when running or reviewing work through the BMad-style subagent SDLC, enforcing gates, classifying risk, or mapping SDLC stages to external regulatory regimes.
 metadata:
   scope: repo-level
-  version: "1.1"
+  version: "1.2"
   supersedes: SOW.md (deleted; content fully absorbed into this skill)
 ---
 
@@ -100,20 +100,37 @@ Each role subagent MUST:
 
 ## Artifacts
 
+Spec-based documentation: each role writes its owned artifact at a fixed path. The always-on
+`spec-based-docs` rule enforces the same table for inline work.
+
 | Artifact                                                    | Owner            | Location (relative to repo root)                         |
 |-------------------------------------------------------------|------------------|----------------------------------------------------------|
 | Market/vision analysis                                      | `sdlc-analyst`   | `docs/business/{slug}-analysis.md`                       |
 | PRD (product requirements, acceptance criteria, edge cases) | `sdlc-pm`        | `docs/business/{slug}-prd.md`                            |
-| Architecture proposal + ADR                                 | `sdlc-architect` | `docs/architecture/{slug}.md`, `docs/adr/NNNN-{slug}.md` |
+| Architecture proposal + ADR + root overview                 | `sdlc-architect` | `docs/architecture/{slug}.md`, `docs/adr/NNNN-{slug}.md`, `ARCHITECTURE.md` (when impact > none) |
 | Story breakdown + risk classification + AI autonomy cap     | `sdlc-sm`        | `docs/stories/{slug}-stories.md`                         |
 | Implementation (code + AI assumptions log)                  | `sdlc-dev`       | feature branch + `docs/stories/{slug}-assumptions.md`    |
 | Test plan + test code                                       | `sdlc-qa`        | `tests/` + `docs/stories/{slug}-tests.md`                |
 | Security report (SAST/deps/secrets/auth)                    | `sdlc-security`  | `docs/security/{slug}-security.md`                       |
 | Code review report                                          | `sdlc-reviewer`  | `docs/reviews/{slug}-review.md`                          |
 | Definition-of-Done audit                                    | `sdlc-auditor`   | `docs/reviews/{slug}-dod.md`                             |
+| Incident analysis (post-deploy, non-linear)                 | `sdlc-qa` + `sdlc-security` | `docs/reviews/{slug}-incident.md`               |
+| API contracts                                               | `sdlc-dev`       | `docs/api/` (+ OpenAPI colocated with route handlers, e.g. next to axum routes) |
+| DB schema / migrations                                      | `sdlc-dev` / `sdlc-architect` | `docs/database/`                              |
+| Runbooks / troubleshooting / deploy                         | `sdlc-qa` / `sdlc-security` / `sdlc-architect` | `docs/runbooks/`, `docs/troubleshooting/`, `docs/deployment/` |
 
 `{slug}` is derived from the requirement/epic title by the orchestrator and reused across all artifacts for
 traceability.
+
+### Spec-based documentation hard rules
+
+1. **`ARCHITECTURE.md`** at the repo root is the system overview. When a change has architectural impact,
+   `sdlc-architect` MUST create or update it **and** the relevant ADRs in the same change as
+   `docs/architecture/{slug}.md`.
+2. **API contract sync.** Any change to an API contract MUST update `docs/api/` in the **same** change.
+   Keep OpenAPI next to the route handlers when the stack uses that pattern (e.g. axum). That keeps the
+   backend and the TypeScript client library in sync — do not land handler changes without matching contract docs.
+3. Missing or stale owned artifacts fail the DoD "Documentation updated" item.
 
 ## Quality Gates (verbatim from SOW §2)
 
@@ -304,7 +321,7 @@ knowledge-base surface below to be current for the change.
 |---|----------------------------|------------------------------------------------------------------|---------------------------------|-----------------------------------------|
 | 1 | Architecture documentation | `ARCHITECTURE.md`, `docs/architecture/{slug}.md`                 | `sdlc-architect`                | architecture impact > none              |
 | 2 | ADRs                       | `docs/adr/NNNN-{slug}.md`                                        | `sdlc-architect`                | any non-trivial decision                |
-| 3 | API documentation          | `docs/api/` (+ OpenAPI/Protobuf/schema alongside code)           | `sdlc-dev`                      | any API contract change                 |
+| 3 | API documentation          | `docs/api/` (+ OpenAPI colocated with routes, e.g. axum; keeps TS clients in sync) | `sdlc-dev`        | any API contract change (same change)   |
 | 4 | Database documentation     | `docs/database/` (schema, ERD, data dictionary, migration notes) | `sdlc-dev` / `sdlc-architect`   | any DB migration or schema change       |
 | 5 | Module documentation       | per-module README / doc comments                                 | `sdlc-dev`                      | module behaviour changed                |
 | 6 | Runbooks                   | `docs/runbooks/`                                                 | `sdlc-qa` / `sdlc-security`     | new operational surface or failure mode |

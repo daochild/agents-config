@@ -69,8 +69,9 @@ point their `AGENTS.md` at
   documented separately from OpenCode's `instructions/skills` discovery path. See
   [ADR 0003](docs/adr/0003-document-external-skill.md).
 - **SDLC regulatory framework.** The `sdlc-*` subagents + `sdlc-regulatory` skill +
-  `sdlc-gates` rule implement the AI-Driven SDLC. The skill is the source of truth for the methodology (it superseded
-  the deleted `SOW.md`). The orchestrator is the single entry point via the `/sdlc` command.
+  `sdlc-gates` and `spec-based-docs` rules implement the AI-Driven SDLC. The skill is the source of truth for the
+  methodology (it superseded the deleted `SOW.md`); `spec-based-docs` fixes artifact paths/owners and the
+  ARCHITECTURE.md / API same-change rules. The orchestrator is the single entry point via the `/sdlc` command.
 - **Harness engineering guidance.** The `harness-engineering` skill and always-on rule are
   stored under `instructions/` for OpenCode and mirrored for other clients when needed. They describe context selection,
   host-enforced policy, bounded execution, independent verification, and privacy-aware

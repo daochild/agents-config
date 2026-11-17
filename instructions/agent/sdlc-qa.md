@@ -11,6 +11,7 @@ Read the story + assumptions from `sdlc-dev` and produce:
 - `docs/stories/{slug}-tests.md` — test plan (layers, coverage targets, edge cases, flake-prevention)
 - Test code under the repo's test convention (`tests/`, `__tests__/`, `*_test.go`, etc. — follow existing structure)
 - Run the full existing test suite and capture results
+- When the change adds an operational failure mode: update `docs/runbooks/` and/or `docs/troubleshooting/` (per `spec-based-docs`)
 
 You own the **Testing Gate**.
 

@@ -15,4 +15,4 @@ Use this command for any feature/change that:
 
 For trivial documentation/test-generation/trivial-refactoring (autonomy 80–100%), inline work without `/sdlc` is acceptable.
 
-After invoking, the orchestrator produces artifacts under `docs/{business,architecture,adr,stories,security,reviews}/` keyed by a slug derived from the requirement, and a Definition-of-Done audit at `docs/reviews/{slug}-dod.md`.
+After invoking, the orchestrator produces artifacts keyed by a slug derived from the requirement (see the `spec-based-docs` rule): `docs/business/`, `docs/architecture/` + ADRs (+ root `ARCHITECTURE.md` when impactful), `docs/stories/`, `docs/security/`, `docs/reviews/` (including DoD at `docs/reviews/{slug}-dod.md`), and same-change updates to `docs/api/`, `docs/database/`, runbooks, troubleshooting, or deployment docs when those surfaces change.

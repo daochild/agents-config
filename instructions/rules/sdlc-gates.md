@@ -31,6 +31,14 @@ Any AI-generated change MUST pass these gates in order before it reaches product
 - Inline (main agent only) is acceptable for documentation/test-generation only (autonomy 100%) and trivial internal refactoring (autonomy 80–100%).
 - For any change above ~50% autonomy cap, invoke the subagent flow.
 
+## Spec-based documentation
+
+Artifact paths and owners are fixed by the always-on `spec-based-docs` rule (and the Artifacts table in `sdlc-regulatory`). In short:
+
+- Root `ARCHITECTURE.md` is the system overview — `sdlc-architect` creates/updates it plus ADRs when impact > none.
+- Any API contract change updates `docs/api/` in the **same** change (OpenAPI colocated with routes when applicable) so backend and TS clients stay in sync.
+- DoD fails if required slug artifacts or knowledge-base surfaces are missing/stale.
+
 ## AI-readable codebase precondition
 
 The Architecture Gate requires "existing architecture has been analyzed". That presupposes the repo is AI-readable (AI-Readable Codebase section of the `sdlc-regulatory` skill). Minimum required for any SDLC run:

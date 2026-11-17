@@ -10,6 +10,7 @@ const skillspectorRule = 'instructions/rules/nvidia-skillspector-check.md';
 
 const ALWAYS_ON_RULES = [
   'instructions/rules/sdlc-gates.md',
+  'instructions/rules/spec-based-docs.md',
   'instructions/rules/harness-engineering.md',
   skillspectorRule,
 ];
@@ -32,7 +33,7 @@ test('opencode always-on instructions include every documented harness and skill
   for (const rule of ALWAYS_ON_RULES) {
     assert.match(agents, new RegExp(escapeRe(rule)));
   }
-  assert.match(agents, /three always-on rules/);
+  assert.match(agents, /four always-on rules/);
 });
 
 test('find-skills and CONTRIBUTING point skill contributors at Skillspector', () => {
